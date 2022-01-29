@@ -35,6 +35,10 @@ export default class PaintApp implements IProcess {
     };
   }
 
+  public readonly meta = {
+    name: 'Paint'
+  };
+
   private mainWindow: IWindow | null = null;
 
   private constructor(

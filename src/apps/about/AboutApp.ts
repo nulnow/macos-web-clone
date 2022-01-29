@@ -56,6 +56,10 @@ export default class AboutApp extends TerminalApp implements IProcess {
     };
   }
 
+  public readonly meta = {
+    name: 'About'
+  };
+
   public constructor(
     system: ISystem,
     pid: number,

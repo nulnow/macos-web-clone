@@ -20,7 +20,7 @@ export default class WallpaperApp implements IProcess {
   private static readonly IDENTIFIER = 'wallpaper-app';
 
   public static isWallpaperAppProcess(process: IProcess): boolean {
-    return process?.meta?.identifier === WallpaperApp.IDENTIFIER;
+    return process.meta.name === 'Wallpaper';
   }
 
   public static createShortcut(system: ISystem): IShortcut {
@@ -29,7 +29,7 @@ export default class WallpaperApp implements IProcess {
       iconUrl: icon.src,
       action(): void {
         const wallpaperApp: WallpaperApp = <WallpaperApp>(
-          system.getProcesses().find(p => WallpaperApp.isWallpaperAppProcess(p))
+          system.getProcesses$().getValue().find(p => WallpaperApp.isWallpaperAppProcess(p))
         );
         wallpaperApp.openWindow();
       },
@@ -59,7 +59,7 @@ export default class WallpaperApp implements IProcess {
   public readonly wallpapers$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
 
   public readonly meta = {
-    identifier: WallpaperApp.IDENTIFIER,
+    name: 'Wallpaper'
   };
 
   private constructor(

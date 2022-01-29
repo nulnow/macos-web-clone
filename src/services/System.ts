@@ -10,7 +10,7 @@ import AutoStart from './AutoStart';
 
 export default class System implements ISystem {
   public static generatePid(): number {
-    return Math.random();
+    return Math.round(Math.random() * 1000000);
   }
 
   private static generateUniquePid(processes: IProcess[]): number {
@@ -67,9 +67,11 @@ export default class System implements ISystem {
     windows.forEach(window => {
       this.windowManager.closeWindow(window);
     });
+
+    this.processes$.next(this.processes$.getValue().filter(p => p.pid !== pid));
   }
 
-  public getProcesses(): IProcess[] {
-    return this.processes$.getValue();
+  public getProcesses$(): BehaviorSubject<IProcess[]> {
+    return this.processes$;
   }
 }

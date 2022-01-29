@@ -69,6 +69,10 @@ export default class WindowManager implements IWindowManager, IProcess {
 
   private static readonly ANIMATION_DURATION = 150;
 
+  public readonly meta = {
+    name: 'Window Manager'
+  };
+
   private readonly windows$: BehaviorSubject<IWindow[]> = new BehaviorSubject<IWindow[]>([]);
 
   private readonly wallpaperUrl$ = new BehaviorSubject<string | undefined>(undefined);

@@ -16,6 +16,7 @@ import AboutApp from '../about/AboutApp';
 import TalkingFaceApp from '../talking-face/TalkingFaceApp';
 import {tween} from '../../utils/rx/tween';
 import {DOCK_ICON_SIZE} from '../../components/dock/dock-shortcut/consts';
+import IphoneMockupApp from '../iphone-mockup/IphoneMockupApp';
 
 const browserWindow: Window = ((): Window => {
   return globalThis as any as Window;
@@ -32,6 +33,10 @@ export class DockApp implements IProcess {
     ): DockApp {
       return new DockApp(system, pid, inputStream, outputStream, errorStream);
     }
+  };
+
+  public readonly meta = {
+    name: 'Dock'
   };
 
   private readonly shortcuts$: BehaviorSubject<IShortcut[]> = new BehaviorSubject<IShortcut[]>([]);
@@ -56,6 +61,7 @@ export class DockApp implements IProcess {
       CyberBirdApp.getShortcut(system),
       WardaemonApp.getShortcut(system),
       SelfApp.getShortcut(system),
+      IphoneMockupApp.getShortcut(system),
       TalkingFaceApp.getShortcut(system)
     ]);
   }

@@ -17,7 +17,7 @@ const browserWindow: Window = ((): Window => {
 })();
 
 export default class TalkingFaceApp implements IProcess {
-  public static readonly processManagerAppFactory: IAppFactory<TalkingFaceApp> = {
+  public static readonly factory: IAppFactory<TalkingFaceApp> = {
     create(
       system: ISystem,
       pid: number,
@@ -34,10 +34,14 @@ export default class TalkingFaceApp implements IProcess {
       title: 'Talking face',
       iconUrl: icon.src,
       action(): void {
-        system.spawnProcess(TalkingFaceApp.processManagerAppFactory);
+        system.spawnProcess(TalkingFaceApp.factory);
       }
     };
   }
+
+  public readonly meta = {
+    name: 'Talking face'
+  };
 
   private readonly windowManager: IWindowManager;
 

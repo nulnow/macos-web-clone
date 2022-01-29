@@ -45,6 +45,10 @@ export default class CyberBirdApp implements IProcess {
 
   private static readonly HEIGHT = 609;
 
+  public readonly meta = {
+    name: 'Cyber Bird'
+  };
+
   private mainWindow?: IWindow;
 
   private constructor(

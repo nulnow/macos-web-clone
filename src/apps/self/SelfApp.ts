@@ -10,6 +10,12 @@ import React from 'react';
 import AppLayout from '../../components/app-layout/AppLayout';
 import {IShortcut} from '../../models/IShortcut';
 
+import icon from '../../../resources/apps/terminal/icon.svg';
+
+const browserWindow: Window = ((): Window => {
+  return globalThis as any as Window;
+})();
+
 export default class SelfApp implements IProcess {
   public static readonly selfAppAppFactory: IAppFactory<SelfApp> = {
     create(
@@ -26,13 +32,16 @@ export default class SelfApp implements IProcess {
   public static getShortcut(system: ISystem): IShortcut {
     return {
       title: 'Macos',
-      iconUrl:
-        'https://upload.wikimedia.org/wikipedia/commons/2/22/MacOS_logo_%282017%29.svg',
+      iconUrl: icon.src,
       action(): void {
         system.spawnProcess(SelfApp.selfAppAppFactory);
       },
     };
   }
+
+  public readonly meta = {
+    name: 'Self'
+  };
 
   private mainWindow: IWindow | null = null;
 
@@ -76,7 +85,7 @@ export default class SelfApp implements IProcess {
           },
           [
             React.createElement('iframe', {
-              src: 'http://localhost:3000/',
+              src: browserWindow.location.href,
               width: width,
               height: height,
               style: {

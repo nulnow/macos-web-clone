@@ -52,6 +52,10 @@ export default class TerminalApp implements IProcess {
     };
   }
 
+  public readonly meta = {
+    name: 'Terminal'
+  };
+
   protected mainWindow?: IWindow;
 
   protected constructor(

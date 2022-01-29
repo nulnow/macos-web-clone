@@ -6,6 +6,10 @@ import {IShortcut} from '../../models/IShortcut';
 import icon from '../../../resources/apps/paint/icon.svg';
 import {IWindow} from '../../models/IWindow';
 import WindowManager from '../../services/WindowManager';
+import {IWindowManager} from '../../models/IWindowManager';
+import React, {FC} from 'react';
+import ProcessManagerComponent from './ProcessManagerComponent';
+import {BehaviorSubject} from 'rxjs';
 
 export default class ProcessManager implements IProcess {
   public static readonly processManagerAppFactory: IAppFactory<ProcessManager> = {
@@ -30,7 +34,13 @@ export default class ProcessManager implements IProcess {
     };
   }
 
+  public readonly meta = {
+    name: 'Process Manager'
+  };
+
   private mainWindow: IWindow | null = null;
+
+  private readonly windowManager: IWindowManager;
 
   private constructor(
     private readonly system: ISystem,
@@ -38,7 +48,13 @@ export default class ProcessManager implements IProcess {
     public readonly inputStream$: IProcessStream,
     public readonly outputStream$: IProcessStream,
     public readonly errorStream$: IProcessStream
-  ) {}
+  ) {
+    this.windowManager = system.getWindowManager();
+  }
+
+  public getProcesses$(): BehaviorSubject<IProcess[]> {
+    return this.system.getProcesses$();
+  }
 
   public getWindows(): IWindow[] {
     if (this.mainWindow) {
@@ -48,8 +64,29 @@ export default class ProcessManager implements IProcess {
   }
 
   public start(): void {
-    this.mainWindow = WindowManager.createBlankWindow(this);
+    const that: ProcessManager = this;
+    this.mainWindow = this.windowManager.createWindow(WindowManager.createBlankWindow(this, {
+      title$: new BehaviorSubject<string>('Process Manager')
+    }));
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    this.mainWindow.component$.next(() => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      return function ProcessManagerAppWrapper({window}) {
+        return React.createElement(ProcessManagerComponent, {window, app: that});
+      } as FC<{window: IWindow, app: ProcessManager}>;
+    });
   }
 
-  public onClose(): void {}
+  public onCloseClick(): void {
+    this.system.killProcess(this.pid);
+  }
+
+  public onKillProcessClick(process: IProcess): void {
+    this.system.killProcess(process.pid);
+  }
+
+  public onClose(): void {
+
+  }
 }

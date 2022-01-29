@@ -6,7 +6,7 @@ import {IProcessStream} from '../models/IProcessStream';
 import {IWindow} from '../models/IWindow';
 import WallpaperApp from '../apps/wallpaper/WallpaperApp';
 import AboutApp from '../apps/about/AboutApp';
-import TalkingFaceApp from '../apps/talking-face/TalkingFaceApp';
+import ProcessManager from '../apps/process-manager/ProcessManager';
 
 export default class AutoStart implements IAutoStart, IProcess {
   public static autoStartFactory: IAppFactory<AutoStart> = {
@@ -19,6 +19,10 @@ export default class AutoStart implements IAutoStart, IProcess {
     ): AutoStart {
       return new AutoStart(system, pid, inputStream, outputStream, errorStream);
     },
+  };
+
+  public readonly meta = {
+    name: 'Auto Start'
   };
 
   private constructor(
@@ -42,7 +46,8 @@ export default class AutoStart implements IAutoStart, IProcess {
     // mainWindow.movable$.next(false);
 
     this.system.spawnProcess(WallpaperApp.wallpaperAppFactory);
-    this.system.spawnProcess(TalkingFaceApp.processManagerAppFactory);
+    this.system.spawnProcess(ProcessManager.processManagerAppFactory);
+    // this.system.spawnProcess(TalkingFaceApp.factory);
   }
 
   public getWindows(): IWindow[] {

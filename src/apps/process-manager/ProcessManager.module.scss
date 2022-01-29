@@ -1,0 +1,61 @@
+.ProcessManager {
+  position: relative;
+
+  display: flex;
+  flex-flow: column nowrap;
+
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  background-color: #fff;
+}
+
+.processRow {
+  margin: 0;
+
+  font-size: 12px;
+
+  td {
+    padding: 4px;
+    margin: 0;
+    border: 0;
+
+    border-bottom: 1px solid #e1e1e1;
+  }
+
+  &:hover {
+    background: linear-gradient(#3486ff, #5879ff);
+  }
+}
+
+.selectedProcess {
+  background: linear-gradient(#3486ff, #5879ff);
+}
+
+// TODO Create default UI Lib?
+.killButton {
+  position: absolute;
+  bottom: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 38px;
+  border: 0;
+
+  background: linear-gradient(#f1193f, #d91033);
+
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+
+  &:hover {
+    filter: brightness(0.95);
+  }
+  &:active {
+    filter: brightness(0.90);
+  }
+}

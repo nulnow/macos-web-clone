@@ -33,6 +33,10 @@ export default class WardaemonApp implements IProcess {
     };
   }
 
+  public readonly meta = {
+    name: 'Wardaemon'
+  };
+
   private mainWindow: IWindow | null = null;
 
   private constructor(

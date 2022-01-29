@@ -3,7 +3,9 @@ import {IProcessStream} from './IProcessStream';
 
 export interface IProcess {
   readonly pid: number;
-  readonly meta?: any;
+  readonly meta: {
+    name: string;
+  };
 
   start(): void;
   getWindows(): IWindow[];

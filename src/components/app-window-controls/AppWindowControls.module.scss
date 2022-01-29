@@ -1,0 +1,61 @@
+.appWindowControls {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  gap: 7px;
+}
+
+@mixin button {
+  display: block;
+
+  $size: 12px;
+
+  min-width: $size;
+  max-width: $size;
+
+  min-height: $size;
+  max-height: $size;
+
+  border: 0;
+  border-radius: 50%;
+
+  transition: 0.1s ease-in-out;
+}
+
+.buttonRed {
+  @include button;
+  background-color: #FF004D;
+
+  &:hover {
+    background-color: #da0041;
+  }
+  &:active {
+    background-color: #bb0038;
+  }
+}
+
+.buttonYellow {
+  @include button;
+  background-color: #FFE600;
+
+  &:hover {
+    background-color: #dcc500;
+  }
+  &:active {
+    background-color: #af9c00;
+  }
+}
+
+.buttonGreen {
+  @include button;
+  background-color: #00FF94;
+
+  &:hover {
+    background-color: #00de7f;
+  }
+  &:active {
+    background-color: #00b266;
+  }
+}

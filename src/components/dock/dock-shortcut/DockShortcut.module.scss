@@ -1,0 +1,27 @@
+.DockShortcut {
+
+}
+
+.terminalIcon {
+  overflow: hidden;
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+
+  transition: 0.15s ease-in-out;
+
+  &:hover {
+    width: calc(50px * 1.4);
+    height: calc(50px * 1.4);
+    border-radius: calc(10px * 1.4);
+  }
+  &:active {
+
+  }
+}

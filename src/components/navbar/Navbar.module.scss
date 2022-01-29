@@ -1,0 +1,20 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 2;
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  padding: 0 8px;
+
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+
+  color: white;
+  font-size: 12px;
+}

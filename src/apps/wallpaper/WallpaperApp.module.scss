@@ -1,0 +1,52 @@
+.WallpaperApp {
+  max-width: 100%;
+  min-height: 100%;
+  height: 100%;
+
+  //background-color: #dadada;
+  padding-bottom: 38px;
+
+  overflow: scroll;
+}
+
+.wallpaper {
+  width: 200px;
+  height: 100px;
+  margin: 4px;
+  border: none;
+
+  background-position: center center;
+  background-size: cover;
+
+  &:hover {
+    outline: 4px solid #006fff;
+    z-index: 1;
+  }
+  &:active {
+    filter: brightness(1.2);
+  }
+}
+
+.clearButton {
+  position: absolute;
+  bottom: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 38px;
+  border: 0;
+
+  background: linear-gradient(#f1193f, #d91033);
+
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+
+  &:hover {
+    filter: brightness(0.95);
+  }
+  &:active {
+    filter: brightness(0.90);
+  }
+}

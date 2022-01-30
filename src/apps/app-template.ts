@@ -4,6 +4,10 @@ import {IProcess} from '../models/IProcess';
 import {IWindow} from '../models/IWindow';
 
 export default abstract class AppTemplate implements IProcess {
+  public readonly meta = {
+    name: '',
+  };
+
   protected constructor(
     private readonly system: ISystem,
     public readonly pid: number,

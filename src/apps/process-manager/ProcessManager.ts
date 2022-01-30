@@ -3,7 +3,7 @@ import {IAppFactory} from '../../models/IAppFactory';
 import {ISystem} from '../../models/ISystem';
 import {IProcessStream} from '../../models/IProcessStream';
 import {IShortcut} from '../../models/IShortcut';
-import icon from '../../../resources/apps/paint/icon.svg';
+import icon from '../../../resources/apps/process-manager/icon.svg';
 import {IWindow} from '../../models/IWindow';
 import WindowManager from '../../services/WindowManager';
 import {IWindowManager} from '../../models/IWindowManager';

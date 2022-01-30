@@ -21,7 +21,10 @@ export interface IWindow {
 
   resizable$: BehaviorSubject<boolean>;
   movable$: BehaviorSubject<boolean>;
+  // TODO Move collapsed to a separate subject
+  //  (or create window ViewState enum (DEFAULT, COLLAPSED, FULLSCREEN))
   transform$: BehaviorSubject<IWindowTransform>;
+  fullscreen$: BehaviorSubject<boolean>;
 
   process: IProcess;
 }

@@ -1,15 +1,25 @@
+$buttonHeight: 38px;
+
 .WallpaperApp {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+
   max-width: 100%;
   min-height: 100%;
   height: 100%;
 
   //background-color: #dadada;
-  padding-bottom: 38px;
+  padding-bottom: $buttonHeight * 2;
 
   overflow: scroll;
 }
 
-.wallpaper {
+.wallpaper,
+.colorButton {
+  display: block;
   width: 200px;
   height: 100px;
   margin: 4px;
@@ -35,7 +45,7 @@
   display: block;
 
   width: 100%;
-  height: 38px;
+  height: $buttonHeight;
   border: 0;
 
   background: linear-gradient(#f1193f, #d91033);
@@ -50,4 +60,10 @@
   &:active {
     filter: brightness(0.90);
   }
+}
+
+.colorButton {
+  //margin: 0;
+  padding: 10px;
+  box-sizing: border-box;
 }

@@ -27,6 +27,14 @@ $windowBorderRadius: 13px;
   position: absolute;
 }
 
+.appLayoutFullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  z-index: 2;
+}
+
 .header {
   position: relative;
 
@@ -65,7 +73,7 @@ $windowBorderRadius: 13px;
 
   border-bottom-left-radius: $windowBorderRadius;
   border-bottom-right-radius: $windowBorderRadius;
-  border: 1px solid #D3D3D3;
+  border: 1px solid #ffffff4f;
 
   backdrop-filter: blur(25px);
   background-color: rgba(0, 0, 0, 0.5);
@@ -73,6 +81,11 @@ $windowBorderRadius: 13px;
   overflow: scroll;
 
   @include shadow;
+}
+
+.contentWrapperFullscreen {
+  width: 100vw;
+  height: 100vh;
 }
 
 .a {

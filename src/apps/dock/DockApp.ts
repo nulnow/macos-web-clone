@@ -3,20 +3,18 @@ import {ISystem} from '../../models/ISystem';
 import {IProcessStream} from '../../models/IProcessStream';
 import {IAppFactory} from '../../models/IAppFactory';
 import {IWindow} from '../../models/IWindow';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Subscription} from 'rxjs';
 import {IShortcut} from '../../models/IShortcut';
 import TerminalApp from '../terminal/TerminalApp';
 import CyberBirdApp from '../cyber-bird/CyberBirdApp';
 import WallpaperApp from '../wallpaper/WallpaperApp';
-import VSCodeApp from '../vs-code/VSCodeApp';
 import PaintApp from '../paint/PaintApp';
-import WardaemonApp from '../wardaemon/WardaemonApp';
-import SelfApp from '../self/SelfApp';
 import AboutApp from '../about/AboutApp';
 import TalkingFaceApp from '../talking-face/TalkingFaceApp';
 import {tween} from '../../utils/rx/tween';
 import {DOCK_ICON_SIZE} from '../../components/dock/dock-shortcut/consts';
-import IphoneMockupApp from '../iphone-mockup/IphoneMockupApp';
+import ProcessManager from '../process-manager/ProcessManager';
+import {mapWindowsSubjectToCollapsedWindowsSubject} from '../../utils/rx/mapWindowsSubjectToCollapsedWindowsSubject';
 
 const browserWindow: Window = ((): Window => {
   return globalThis as any as Window;
@@ -41,9 +39,13 @@ export class DockApp implements IProcess {
 
   private readonly shortcuts$: BehaviorSubject<IShortcut[]> = new BehaviorSubject<IShortcut[]>([]);
 
-  private readonly collapsedWindows$: BehaviorSubject<IWindow[]> = new BehaviorSubject<IWindow[]>(
-    []
-  );
+  private collapsedWindows$: BehaviorSubject<IWindow[]> = new BehaviorSubject<IWindow[]>([]);
+
+  private initializeCollapsedWindows(): void {
+    mapWindowsSubjectToCollapsedWindowsSubject(
+      this.system.getWindowManager().getWindows$()
+    ).subscribe(this.collapsedWindows$);
+  }
 
   private constructor(
     private readonly system: ISystem,
@@ -55,13 +57,13 @@ export class DockApp implements IProcess {
     this.shortcuts$.next([
       AboutApp.getAboutShortcut(system),
       TerminalApp.getTerminalShortcut(system),
-      VSCodeApp.getShortcut(system),
+      ProcessManager.getShortcut(system),
       PaintApp.getShortcut(system),
       WallpaperApp.createShortcut(system),
       CyberBirdApp.getShortcut(system),
-      WardaemonApp.getShortcut(system),
-      SelfApp.getShortcut(system),
-      IphoneMockupApp.getShortcut(system),
+      // WardaemonApp.getShortcut(system),
+      // SelfApp.getShortcut(system),
+      // IphoneMockupApp.getShortcut(system),
       TalkingFaceApp.getShortcut(system)
     ]);
   }
@@ -100,34 +102,59 @@ export class DockApp implements IProcess {
     });
 
     setTimeout(() => {
-      this.collapsedWindows$.next([...this.collapsedWindows$.getValue(), window]);
       window.transform$.next({
         ...window.transform$.getValue(),
         x: 0,
         y: 0,
         collapsed: true
       });
+      // this.collapsedWindows$.next([...this.collapsedWindows$.getValue(), window]);
     }, DURATION);
   }
 
   public uncollapseWindow(window: IWindow): void {
     window.transform$.next({});
-    this.collapsedWindows$.next(this.collapsedWindows$.getValue().filter(w => w.id !== window.id));
+    // this.collapsedWindows$.next(this.collapsedWindows$.getValue().filter(w => w.id !== window.id));
   }
 
   public getWindows(): IWindow[] {
     return [];
   }
 
-  public start(): void {}
+  private windowsSubscription: Subscription | null = null;
 
-  public onClose(): void {}
+  public start(): void {
+    // TODO Find a way to do this properly
+    // this setTimeout allows to access IWindowManager because
+    // DockApp instantiated in `start` method of WindowManager
+    setTimeout(() => {
+      // const windowManager: IWindowManager = this.system.getWindowManager();
+      this.initializeCollapsedWindows();
+      // this.collapsedWindows$
+      // this.windowsSubscription = windowManager.getWindows$().subscribe(windows => {
+      //   this.collapsedWindows$.next(
+      //     this.collapsedWindows$.getValue().filter(window => windows.includes(window))
+      //   );
+      // });
+    }, 0);
+  }
+
+  public onClose(): void {
+    if (this.windowsSubscription) {
+      this.windowsSubscription.unsubscribe();
+      this.windowsSubscription = null;
+    }
+  }
 
   public getShortcuts$(): BehaviorSubject<IShortcut[]> {
     return this.shortcuts$;
   }
 
   public getCollapsedWindows$(): BehaviorSubject<IWindow[]> {
+    if (!this.collapsedWindows$) {
+      throw new Error('this.collapsedWindows is null');
+    }
+
     return this.collapsedWindows$;
   }
 }

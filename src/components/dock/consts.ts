@@ -1,1 +1,1 @@
-export const DOCK_WIDTH: number = 72;
+export const DOCK_WIDTH: number = 64;

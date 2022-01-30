@@ -5,9 +5,12 @@ import {BehaviorSubject} from 'rxjs';
 
 export interface IWindowManager {
   getWallpaperUrl$(): BehaviorSubject<string | undefined>;
+  getWallpaperColor$(): BehaviorSubject<string | undefined>;
   getWindows$(): BehaviorSubject<IWindow[]>;
+  getFullscreenWindow$(): BehaviorSubject<IWindow | null>;
 
   setWallpaperUrl(url?: string): void;
+  setWallpaperColor(color?: string): void;
   setFocus(window: IWindow): void;
   clearWindowsFocus(): void;
   createWindow(window: IWindow): IWindow;
@@ -17,6 +20,8 @@ export interface IWindowManager {
   expand(window: IWindow): void;
   unexpand(window: IWindow): void;
   toggleExpand(window: IWindow): void;
+  enterFullScreen(window: IWindow): void;
+  leaveFullScreen(window: IWindow): void;
   getProcessWindows(pid: number): IWindow[];
   getDockApp(): DockApp;
   render(): ReactElement<any, any> | null;

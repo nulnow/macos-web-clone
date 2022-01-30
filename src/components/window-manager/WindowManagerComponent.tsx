@@ -7,15 +7,18 @@ import Navbar from '../navbar/Navbar';
 import Dock from '../dock/Dock';
 import {useBehaviorSubject} from '../../utils/rx/useBehaviorSubject';
 import {IWindow} from '../../models/IWindow';
+import WallpaperApp from '../../apps/wallpaper/WallpaperApp';
 
 const WindowManagerComponent: FC<{windowManager: IWindowManager}> = ({
   windowManager,
 }) => {
   const windows: IWindow[] = useBehaviorSubject(windowManager.getWindows$());
   const wallpaperUrl: string | undefined = useBehaviorSubject(windowManager.getWallpaperUrl$());
+  const wallpaperColor: string | undefined = useBehaviorSubject(windowManager.getWallpaperColor$());
   const collapsedWindows: IWindow[] = useBehaviorSubject(
     windowManager.getDockApp().getCollapsedWindows$()
   );
+  const fullscreenWindow: IWindow | null = useBehaviorSubject(windowManager.getFullscreenWindow$());
 
   return (
     <div className={styles.container}>
@@ -27,16 +30,27 @@ const WindowManagerComponent: FC<{windowManager: IWindowManager}> = ({
 
       <main
         className={styles.desktop}
-        style={{backgroundImage: wallpaperUrl && `url("${wallpaperUrl}")`}}
+        style={{backgroundColor: wallpaperColor ?? WallpaperApp.DEFAULT_WALLPAPER_COLOR, backgroundImage: wallpaperUrl && `url("${wallpaperUrl}")`}}
       >
         <Navbar />
         {windows
-          .filter(window => !collapsedWindows.find(w => w.id === window.id))
+          .filter(window => {
+            if (fullscreenWindow && window.id === fullscreenWindow.id) {
+              return false;
+            }
+            if (collapsedWindows.find(w => w.id === window.id)) {
+              return false;
+            }
+            return true;
+          })
           .map(window => {
             return <WindowComponent key={window.id} window={window} />;
           })}
       </main>
       <Dock />
+      {fullscreenWindow && (
+        <WindowComponent window={fullscreenWindow} />
+      )}
     </div>
   );
 };

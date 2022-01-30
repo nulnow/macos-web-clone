@@ -12,6 +12,7 @@ import {
 import {IUseWindowResizeReturn, useWindowResize} from '../../utils/window/useWindowResize';
 import {useWindowMove} from '../../utils/window/useWindowMove';
 import {getTransformFromIWindowTransform} from '../../utils/window/getTransformFromIWindowTransform';
+import {useDocumentEvent} from '../../utils/dom/useDocumentEvent';
 
 const AppLayout: FC<{window: IWindow; onRedButtonClick?(): void}> = ({
   children,
@@ -35,18 +36,29 @@ const AppLayout: FC<{window: IWindow; onRedButtonClick?(): void}> = ({
   const transform: string | undefined = getTransformFromIWindowTransform(
     useBehaviorSubject(window.transform$)
   );
+  const fullscreen: boolean = useBehaviorSubject(window.fullscreen$);
 
   const {onDragEnd, onDragStart} = useWindowMove(window, windowManager);
 
+  const onGreenButtonClick = (): void => {
+    windowManager.enterFullScreen(window);
+  };
+
+  useDocumentEvent('keydown', ev => {
+    if (fullscreen && (ev.key === 'Escape')) {
+      windowManager.leaveFullScreen(window);
+    }
+  });
+
   return (
     <article
-      className={styles.appLayout}
-      style={{left: x, top: y, zIndex, transform}}
+      className={`${styles.appLayout} ${fullscreen ? styles.appLayoutFullscreen : ''}`}
+      style={fullscreen ? {} : {left: x, top: y, zIndex, transform}}
       onClick={(): void => {
         windowManager.setFocus(window);
       }}
     >
-      <div
+      {!fullscreen && <div
         className={styles.header}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
@@ -58,11 +70,12 @@ const AppLayout: FC<{window: IWindow; onRedButtonClick?(): void}> = ({
         <AppWindowControls
           onRedClick={onRedButtonClick}
           onYellowClick={(): void => windowManager.collapseWindow(window)}
+          onGreenClick={onGreenButtonClick}
         />
-      </div>
+      </div>}
       <main
-        className={styles.contentWrapper}
-        style={{
+        className={`${styles.contentWrapper} ${fullscreen ? styles.contentWrapperFullscreen : ''}`}
+        style={fullscreen ? {} : {
           width,
           height,
           minWidth: APP_CONTENT_WRAPPER_MIN_WIDTH,

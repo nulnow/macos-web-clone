@@ -50,6 +50,7 @@ export default class WindowManager implements IWindowManager, IProcess {
 
       component$: new BehaviorSubject<React.FC | null>(null),
       transform$: new BehaviorSubject<IWindowTransform>({}),
+      fullscreen$: new BehaviorSubject<boolean>(false),
 
       process: process,
 
@@ -77,7 +78,11 @@ export default class WindowManager implements IWindowManager, IProcess {
 
   private readonly wallpaperUrl$ = new BehaviorSubject<string | undefined>(undefined);
 
-  private readonly dockApp: DockApp;
+  private readonly wallpaperColor$ = new BehaviorSubject<string | undefined>(undefined);
+
+  private readonly fullscreenWindow$: BehaviorSubject<IWindow | null> = new BehaviorSubject<IWindow | null>(null);
+
+  private dockApp: DockApp | null = null;
 
   private constructor(
     private system: ISystem,
@@ -85,13 +90,14 @@ export default class WindowManager implements IWindowManager, IProcess {
     public readonly inputStream$: IProcessStream,
     public readonly outputStream$: IProcessStream,
     public readonly errorStream$: IProcessStream
-  ) {
-    this.dockApp = system.spawnProcess(DockApp.dockAppFactory);
+  ) {}
+
+  public start(): void {
+    this.dockApp = this.system.spawnProcess(DockApp.dockAppFactory);
   }
 
-  public start(): void {}
-
   public getDockApp(): DockApp {
+    if (!this.dockApp) throw new Error('this.docApp is null');
     return this.dockApp;
   }
 
@@ -113,7 +119,7 @@ export default class WindowManager implements IWindowManager, IProcess {
   }
 
   public collapseWindow(window: IWindow): void {
-    this.dockApp.collapseWindow(window);
+    this.getDockApp().collapseWindow(window);
   }
 
   /**
@@ -137,6 +143,14 @@ export default class WindowManager implements IWindowManager, IProcess {
 
   public setWallpaperUrl(url?: string): void {
     this.wallpaperUrl$.next(url);
+  }
+
+  public getWallpaperColor$(): BehaviorSubject<string | undefined> {
+    return this.wallpaperColor$;
+  }
+
+  public setWallpaperColor(color?: string): void {
+    this.wallpaperColor$.next(color);
   }
 
   public setFocus(window: IWindow): void {
@@ -222,6 +236,23 @@ export default class WindowManager implements IWindowManager, IProcess {
       return this.unexpand(window);
     }
     return this.expand(window);
+  }
+
+  public getFullscreenWindow$(): BehaviorSubject<IWindow | null> {
+    return this.fullscreenWindow$;
+  }
+
+  public enterFullScreen(window: IWindow): void {
+    this.windows$.getValue().forEach(w => {
+      w.fullscreen$.next(false);
+    });
+    this.fullscreenWindow$.next(window);
+    window.fullscreen$.next(true);
+  }
+
+  public leaveFullScreen(window: IWindow): void {
+    this.fullscreenWindow$.next(null);
+    window.fullscreen$.next(false);
   }
 
   // todo move to window class

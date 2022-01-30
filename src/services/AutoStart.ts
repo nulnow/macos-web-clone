@@ -6,7 +6,6 @@ import {IProcessStream} from '../models/IProcessStream';
 import {IWindow} from '../models/IWindow';
 import WallpaperApp from '../apps/wallpaper/WallpaperApp';
 import AboutApp from '../apps/about/AboutApp';
-import ProcessManager from '../apps/process-manager/ProcessManager';
 
 export default class AutoStart implements IAutoStart, IProcess {
   public static autoStartFactory: IAppFactory<AutoStart> = {
@@ -43,11 +42,8 @@ export default class AutoStart implements IAutoStart, IProcess {
     mainWindow.x$.next(800);
     mainWindow.width$.next(400);
     mainWindow.height$.next(300);
-    // mainWindow.movable$.next(false);
 
     this.system.spawnProcess(WallpaperApp.wallpaperAppFactory);
-    this.system.spawnProcess(ProcessManager.processManagerAppFactory);
-    // this.system.spawnProcess(TalkingFaceApp.factory);
   }
 
   public getWindows(): IWindow[] {

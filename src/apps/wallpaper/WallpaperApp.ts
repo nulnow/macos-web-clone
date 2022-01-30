@@ -8,6 +8,7 @@ import {BehaviorSubject} from 'rxjs';
 import wp1 from '../../../resources/apps/wallpaper/wallpapers/wp1.gif';
 import wp2 from '../../../resources/apps/wallpaper/wallpapers/wp2.gif';
 import wp3 from '../../../resources/apps/wallpaper/wallpapers/wp3.gif';
+import wp4 from '../../../resources/apps/wallpaper/wallpapers/wp4.svg';
 
 import {IShortcut} from '../../models/IShortcut';
 import WindowManager from '../../services/WindowManager';
@@ -17,7 +18,7 @@ import React, {FC} from 'react';
 import icon from '../../../resources/apps/wallpaper/icon.svg';
 
 export default class WallpaperApp implements IProcess {
-  private static readonly IDENTIFIER = 'wallpaper-app';
+  public static readonly DEFAULT_WALLPAPER_COLOR = 'rgb(33, 35, 49)'; // '#242626';
 
   public static isWallpaperAppProcess(process: IProcess): boolean {
     return process.meta.name === 'Wallpaper';
@@ -28,9 +29,12 @@ export default class WallpaperApp implements IProcess {
       title: 'Wallpapers',
       iconUrl: icon.src,
       action(): void {
-        const wallpaperApp: WallpaperApp = <WallpaperApp>(
+        let wallpaperApp: WallpaperApp = <WallpaperApp>(
           system.getProcesses$().getValue().find(p => WallpaperApp.isWallpaperAppProcess(p))
         );
+        if (!wallpaperApp) {
+          wallpaperApp = system.spawnProcess(WallpaperApp.wallpaperAppFactory);
+        }
         wallpaperApp.openWindow();
       },
     };
@@ -69,11 +73,17 @@ export default class WallpaperApp implements IProcess {
     public readonly outputStream$: IProcessStream,
     public readonly errorStream$: IProcessStream
   ) {
-    this.wallpapers$.next([wp1.src, wp2.src, wp3.src]);
+    this.wallpapers$.next([wp1.src, wp2.src, wp3.src, wp4.src]);
   }
 
   public setWallpaper(url?: string): void {
+    this.system.getWindowManager().setWallpaperColor();
     this.system.getWindowManager().setWallpaperUrl(url);
+  }
+
+  public setWallpaperColor(color?: string): void {
+    this.system.getWindowManager().setWallpaperUrl();
+    this.system.getWindowManager().setWallpaperColor(color);
   }
 
   public openWindow(): void {

@@ -13,6 +13,7 @@ import {IUseWindowResizeReturn, useWindowResize} from '../../utils/window/useWin
 import {useWindowMove} from '../../utils/window/useWindowMove';
 import {getTransformFromIWindowTransform} from '../../utils/window/getTransformFromIWindowTransform';
 import {useDocumentEvent} from '../../utils/dom/useDocumentEvent';
+import {useHover} from '../../utils/dom/useHover';
 
 const AppLayout: FC<{window: IWindow; onRedButtonClick?(): void}> = ({
   children,
@@ -41,7 +42,10 @@ const AppLayout: FC<{window: IWindow; onRedButtonClick?(): void}> = ({
   const {onDragEnd, onDragStart} = useWindowMove(window, windowManager);
 
   const onGreenButtonClick = (): void => {
-    windowManager.enterFullScreen(window);
+    if (fullscreen) {
+      return windowManager.leaveFullScreen(window);
+    }
+    return windowManager.enterFullScreen(window);
   };
 
   useDocumentEvent('keydown', ev => {
@@ -49,6 +53,14 @@ const AppLayout: FC<{window: IWindow; onRedButtonClick?(): void}> = ({
       windowManager.leaveFullScreen(window);
     }
   });
+
+  const {
+    hover: fullscreenHeaderHover,
+    onMouseEnter: onFullScreenHeaderMouseEnter,
+    onMouseLeave: onFullScreenHeaderMouseLeave,
+  } = useHover();
+
+  const fullscreenTop: number = fullscreenHeaderHover ? 0 : (-APP_HEADER_HEIGHT) + (APP_HEADER_HEIGHT / 6);
 
   return (
     <article
@@ -58,21 +70,50 @@ const AppLayout: FC<{window: IWindow; onRedButtonClick?(): void}> = ({
         windowManager.setFocus(window);
       }}
     >
-      {!fullscreen && <div
-        className={styles.header}
-        onDragStart={onDragStart}
-        onDragEnd={onDragEnd}
-        draggable={movable}
-        style={{height: APP_HEADER_HEIGHT}}
-        onDoubleClick={(): void => windowManager.toggleExpand(window)}
-      >
-        <h1 className={styles.title}>{title}</h1>
-        <AppWindowControls
-          onRedClick={onRedButtonClick}
-          onYellowClick={(): void => windowManager.collapseWindow(window)}
-          onGreenClick={onGreenButtonClick}
-        />
-      </div>}
+      {((): JSX.Element => {
+        const headerContent: JSX.Element = (
+          <>
+            <h1 className={styles.title}>{title}</h1>
+            <AppWindowControls
+              onRedClick={onRedButtonClick}
+              onYellowClick={(): void => windowManager.collapseWindow(window)}
+              onGreenClick={onGreenButtonClick}
+            />
+          </>);
+        const headerStyles: React.CSSProperties = {height: APP_HEADER_HEIGHT};
+        if (fullscreen) {
+          return (
+              <div
+                className={styles.fullscreenHeader} style={{
+                  ...headerStyles,
+                  top: fullscreenTop,
+                  opacity: fullscreenHeaderHover ? 1 : 0
+                }}
+                onMouseEnter={onFullScreenHeaderMouseEnter}
+                onMouseLeave={onFullScreenHeaderMouseLeave}
+              >
+                {headerContent}
+              </div>
+          );
+        }
+        return (
+            <div
+              className={styles.header}
+              onDragStart={onDragStart}
+              onDragEnd={onDragEnd}
+              draggable={movable}
+              style={headerStyles}
+              onDoubleClick={(): void => windowManager.toggleExpand(window)}
+            >
+              <h1 className={styles.title}>{title}</h1>
+              <AppWindowControls
+                onRedClick={onRedButtonClick}
+                onYellowClick={(): void => windowManager.collapseWindow(window)}
+                onGreenClick={onGreenButtonClick}
+              />
+            </div>
+        );
+      })()}
       <main
         className={`${styles.contentWrapper} ${fullscreen ? styles.contentWrapperFullscreen : ''}`}
         style={fullscreen ? {} : {

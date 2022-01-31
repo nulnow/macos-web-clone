@@ -56,6 +56,26 @@ $windowBorderRadius: 13px;
   @include shadow;
 }
 
+.fullscreenHeader {
+  position: fixed;
+  left: 0;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 100%;
+  padding-left: 10px;
+
+  border: 1px solid #D3D3D3;
+
+  background-color: #fff;
+
+  z-index: 2;
+
+  transition: top 0.1s ease-in-out;
+}
+
 .title {
   position: absolute;
   top: 50%;

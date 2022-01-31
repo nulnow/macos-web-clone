@@ -41,3 +41,35 @@
     border: 0;
   }
 }
+
+.bookmarks {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  gap: 40px;
+
+  padding: 40px;
+}
+
+.bookmark {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+
+  width: 100px;
+  height: 100px;
+  border-radius: 20px;
+
+  background-color: rgba(122, 122, 122, 0.59);
+
+  img {
+    width: 80%;
+    height: 80%;
+  }
+
+  &:hover {
+    background-color: rgba(147, 147, 147, 0.59);
+  }
+}

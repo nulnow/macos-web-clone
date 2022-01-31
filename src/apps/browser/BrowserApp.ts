@@ -60,6 +60,9 @@ export default class BrowserApp implements IProcess {
   ) {}
 
   public getWindows(): IWindow[] {
+    if (this.mainWindow) {
+      return [this.mainWindow];
+    }
     return [];
   }
 

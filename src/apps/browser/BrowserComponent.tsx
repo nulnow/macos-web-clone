@@ -6,6 +6,8 @@ import AppLayout from '../../components/app-layout/AppLayout';
 import {useGlobalContext} from '../../contexts/global-context/useGlobalContext';
 import {useBehaviorSubject} from '../../utils/rx/useBehaviorSubject';
 
+import wikipediaIcon from '../../../resources/apps/browser/bookmarks/wikipedia-icon.svg';
+
 const BrowserComponent: FC<{ window: IWindow, app: BrowserApp }> = ({window, app}) => {
   const {system} = useGlobalContext();
   const inputText: string = useBehaviorSubject(app.inputText$);
@@ -29,8 +31,17 @@ const BrowserComponent: FC<{ window: IWindow, app: BrowserApp }> = ({window, app
             onChange={(event): void => app.inputText$.next(event.target.value)}
           />
         </div>
-        {url && (
+        {url ? (
           <iframe className={styles.page} frameBorder={0} src={url} />
+        ) : (
+          <div className={styles.bookmarks}>
+            <div role="button" className={styles.bookmark} onClick={(): void => {
+              app.inputText$.next('https://www.wikipedia.org/');
+              app.url$.next('https://www.wikipedia.org/');
+            }}>
+              <img src={wikipediaIcon.src} alt='wikipedia bookmark' />
+            </div>
+          </div>
         )}
       </div>
     </AppLayout>

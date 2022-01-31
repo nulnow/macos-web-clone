@@ -4,8 +4,7 @@ import {IAppFactory} from '../models/IAppFactory';
 import {ISystem} from '../models/ISystem';
 import {IProcessStream} from '../models/IProcessStream';
 import {IWindow} from '../models/IWindow';
-import WallpaperApp from '../apps/wallpaper/WallpaperApp';
-import AboutApp from '../apps/about/AboutApp';
+import BrowserApp from '../apps/browser/BrowserApp';
 
 export default class AutoStart implements IAutoStart, IProcess {
   public static autoStartFactory: IAppFactory<AutoStart> = {
@@ -33,17 +32,19 @@ export default class AutoStart implements IAutoStart, IProcess {
   ) {}
 
   public start(): void {
-    const aboutAppProcess: IProcess = this.system.spawnProcess(
-      AboutApp.aboutAppFactory
+    const browserProcess: BrowserApp = this.system.spawnProcess(
+      BrowserApp.factory
     );
-    const mainWindow: IWindow = aboutAppProcess.getWindows()[0];
+    const mainWindow: IWindow = browserProcess.getWindows()[0];
 
-    mainWindow.y$.next(200);
-    mainWindow.x$.next(200);
-    mainWindow.width$.next(400);
-    mainWindow.height$.next(300);
+    mainWindow.y$.next(100);
+    mainWindow.x$.next(140);
+    mainWindow.width$.next(800);
+    mainWindow.height$.next(600);
+    browserProcess.inputText$.next('https://www.wikipedia.org/');
+    browserProcess.url$.next('https://www.wikipedia.org/');
 
-    this.system.spawnProcess(WallpaperApp.wallpaperAppFactory);
+    // this.system.spawnProcess(WallpaperApp.wallpaperAppFactory);
   }
 
   public getWindows(): IWindow[] {

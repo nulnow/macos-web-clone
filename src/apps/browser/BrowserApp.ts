@@ -47,6 +47,10 @@ export default class BrowserApp implements IProcess {
 
   private mainWindow: IWindow | null = null;
 
+  public inputText$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
+  public url$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
   protected constructor(
     private readonly system: ISystem,
     public readonly pid: number,

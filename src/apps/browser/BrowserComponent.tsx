@@ -1,14 +1,15 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import {IWindow} from '../../models/IWindow';
 import BrowserApp from './BrowserApp';
 import styles from './Browser.module.scss';
 import AppLayout from '../../components/app-layout/AppLayout';
 import {useGlobalContext} from '../../contexts/global-context/useGlobalContext';
+import {useBehaviorSubject} from '../../utils/rx/useBehaviorSubject';
 
 const BrowserComponent: FC<{ window: IWindow, app: BrowserApp }> = ({window, app}) => {
   const {system} = useGlobalContext();
-  const [inputText, setInputText] = useState('');
-  const [url, setUrl] = useState<string | null>(null);
+  const inputText: string = useBehaviorSubject(app.inputText$);
+  const url: string = useBehaviorSubject(app.url$);
 
   return (
     <AppLayout window={window} onRedButtonClick={(): void => system.killProcess(app.pid)}>
@@ -21,15 +22,15 @@ const BrowserComponent: FC<{ window: IWindow, app: BrowserApp }> = ({window, app
             value={inputText}
             onKeyPress={(event): void => {
               if (event.key === 'Enter') {
-                setUrl(inputText);
+                app.url$.next(inputText);
               }
             }}
-            onBlur={(): void => setUrl(inputText)}
-            onChange={(event): void => setInputText(event.target.value)}
+            onBlur={(): void => app.url$.next(inputText)}
+            onChange={(event): void => app.inputText$.next(event.target.value)}
           />
         </div>
         {url && (
-          <iframe className={styles.page} src={url} />
+          <iframe className={styles.page} frameBorder={0} src={url} />
         )}
       </div>
     </AppLayout>

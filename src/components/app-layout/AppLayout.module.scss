@@ -93,7 +93,8 @@ $windowBorderRadius: 13px;
 
   border-bottom-left-radius: $windowBorderRadius;
   border-bottom-right-radius: $windowBorderRadius;
-  border: 1px solid #ffffff4f;
+  border: 1px solid #e3e3e3;
+  border-top: 0;
 
   backdrop-filter: blur(25px);
   background-color: rgba(0, 0, 0, 0.5);

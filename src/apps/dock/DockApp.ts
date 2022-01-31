@@ -15,6 +15,7 @@ import {tween} from '../../utils/rx/tween';
 import {DOCK_ICON_SIZE} from '../../components/dock/dock-shortcut/consts';
 import ProcessManager from '../process-manager/ProcessManager';
 import {mapWindowsSubjectToCollapsedWindowsSubject} from '../../utils/rx/mapWindowsSubjectToCollapsedWindowsSubject';
+import BrowserApp from '../browser/BrowserApp';
 
 const browserWindow: Window = ((): Window => {
   return globalThis as any as Window;
@@ -56,6 +57,7 @@ export class DockApp implements IProcess {
   ) {
     this.shortcuts$.next([
       AboutApp.getAboutShortcut(system),
+      BrowserApp.getShortcut(system),
       TerminalApp.getTerminalShortcut(system),
       ProcessManager.getShortcut(system),
       PaintApp.getShortcut(system),

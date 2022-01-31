@@ -1,28 +1,28 @@
-import {ISystem} from '../models/ISystem';
-import {IProcessStream} from '../models/IProcessStream';
-import {IProcess} from '../models/IProcess';
-import {IWindow} from '../models/IWindow';
-import {IAppFactory} from '../models/IAppFactory';
-import {IShortcut} from '../models/IShortcut';
+import {IProcess} from '../../models/IProcess';
+import {ISystem} from '../../models/ISystem';
+import {IProcessStream} from '../../models/IProcessStream';
+import {IWindow} from '../../models/IWindow';
+import {IAppFactory} from '../../models/IAppFactory';
+import {IShortcut} from '../../models/IShortcut';
 
-import icon from '../../resources/apps/terminal/icon.svg';
-import WindowManager from '../services/WindowManager';
+import WindowManager from '../../services/WindowManager';
 import {BehaviorSubject} from 'rxjs';
-import {useBehaviorSubject} from '../utils/rx/useBehaviorSubject';
+import {useBehaviorSubject} from '../../utils/rx/useBehaviorSubject';
 import React from 'react';
-import AppLayout from '../components/app-layout/AppLayout';
+import AppLayout from '../../components/app-layout/AppLayout';
 
-export default abstract class AppTemplate implements IProcess {
-  public static readonly factory: IAppFactory<AppTemplate> = {
+import icon from '../../../resources/apps/browser/icon.svg';
+
+export default class BrowserApp implements IProcess {
+  public static readonly factory: IAppFactory<BrowserApp> = {
     create(
       system: ISystem,
       pid: number,
       inputStream: IProcessStream,
       outputStream: IProcessStream,
       errorStream: IProcessStream
-    ): AppTemplate {
-      class App extends AppTemplate {}
-      return new App(
+    ): BrowserApp {
+      return new BrowserApp(
         system,
         pid,
         inputStream,
@@ -34,16 +34,16 @@ export default abstract class AppTemplate implements IProcess {
 
   public static getShortcut(system: ISystem): IShortcut {
     return {
-      title: 'App',
+      title: 'Browser',
       iconUrl: icon.src,
       action(): void {
-        system.spawnProcess(AppTemplate.factory);
+        system.spawnProcess(BrowserApp.factory);
       },
     };
   }
 
   public readonly meta = {
-    name: '',
+    name: 'Browser',
   };
 
   private mainWindow: IWindow | null = null;
@@ -61,11 +61,11 @@ export default abstract class AppTemplate implements IProcess {
   }
 
   public start(): void {
-    const that: AppTemplate = this;
+    const that: BrowserApp = this;
     const window: IWindow = WindowManager.createBlankWindow(this, {
       width$: new BehaviorSubject<number>(800),
       height$: new BehaviorSubject<number>(600),
-      title$: new BehaviorSubject<string>('CyberBird')
+      title$: new BehaviorSubject<string>('Browser')
     });
     this.mainWindow = this.system.getWindowManager().createWindow(window);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

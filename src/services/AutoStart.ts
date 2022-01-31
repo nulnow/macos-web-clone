@@ -39,7 +39,7 @@ export default class AutoStart implements IAutoStart, IProcess {
     const mainWindow: IWindow = aboutAppProcess.getWindows()[0];
 
     mainWindow.y$.next(200);
-    mainWindow.x$.next(800);
+    mainWindow.x$.next(200);
     mainWindow.width$.next(400);
     mainWindow.height$.next(300);
 

@@ -116,6 +116,10 @@ export default class WindowManager implements IWindowManager, IProcess {
 
   public closeWindow(window: IWindow): void {
     this.windows$.next(this.windows$.getValue().filter(w => w.id !== window.id));
+    // TODO use a stream as with collapsed windows
+    if (this.fullscreenWindow$.getValue()?.id === window.id) {
+      this.fullscreenWindow$.next(null);
+    }
   }
 
   public collapseWindow(window: IWindow): void {

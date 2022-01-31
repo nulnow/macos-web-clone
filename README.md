@@ -11,4 +11,4 @@ does not exit `fullscreen` mode if use press `Escape` button
 * Fix styles on `Windows OS`
 * Filesystem
 * Desktop icons
-
+* Browser

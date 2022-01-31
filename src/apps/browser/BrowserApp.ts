@@ -7,11 +7,10 @@ import {IShortcut} from '../../models/IShortcut';
 
 import WindowManager from '../../services/WindowManager';
 import {BehaviorSubject} from 'rxjs';
-import {useBehaviorSubject} from '../../utils/rx/useBehaviorSubject';
 import React from 'react';
-import AppLayout from '../../components/app-layout/AppLayout';
 
 import icon from '../../../resources/apps/browser/icon.svg';
+import BrowserComponent from './BrowserComponent';
 
 export default class BrowserApp implements IProcess {
   public static readonly factory: IAppFactory<BrowserApp> = {
@@ -73,37 +72,16 @@ export default class BrowserApp implements IProcess {
     this.mainWindow.component$.next(() => {
       // eslint-disable-next-line @typescript-eslint/no-shadow
       return function AppTemplateWrapper({window}: {window: IWindow}) {
-        const width: number = useBehaviorSubject(window.width$);
-        const height: number = useBehaviorSubject(window.height$);
-        const zIndex: number = useBehaviorSubject(window.zIndex$);
-
         if (!that.mainWindow) {
           throw new Error('that.mainWindow does not exist');
         }
 
-        return React.createElement(
-          AppLayout,
-          {
-            window: that.mainWindow,
-            onRedButtonClick() {
-              that.system.killProcess(that.pid);
-            },
-          },
-          [
-            React.createElement('iframe', {
-              src: location.href,
-              width: width,
-              height: height,
-              style: {
-                border: 0,
-                pointerEvents: zIndex === 0 ? 'none' : undefined,
-              },
-            }),
-          ]
-        );
+        return React.createElement(BrowserComponent, {window, app: that});
       };
     });
   }
 
-  public onClose(): void {}
+  public onClose(): void {
+
+  }
 }

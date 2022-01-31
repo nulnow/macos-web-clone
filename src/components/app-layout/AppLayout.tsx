@@ -21,6 +21,7 @@ const AppLayout: FC<{window: IWindow; onRedButtonClick?(): void}> = ({
   onRedButtonClick
 }) => {
   const resizer: IUseWindowResizeReturn = useWindowResize(window);
+
   const {windowManager} = useGlobalContext();
 
   const title: string = useBehaviorSubject(window.title$);
@@ -34,6 +35,9 @@ const AppLayout: FC<{window: IWindow; onRedButtonClick?(): void}> = ({
   const movable: boolean = useBehaviorSubject(window.movable$);
 
   const zIndex: number = useBehaviorSubject(window.zIndex$);
+  const isResizing: boolean = useBehaviorSubject(window.isResizing$);
+  const disablePointerEvents: boolean = isResizing || (zIndex === 0);
+
   const transform: string | undefined = getTransformFromIWindowTransform(
     useBehaviorSubject(window.transform$)
   );
@@ -120,7 +124,8 @@ const AppLayout: FC<{window: IWindow; onRedButtonClick?(): void}> = ({
           width,
           height,
           minWidth: APP_CONTENT_WRAPPER_MIN_WIDTH,
-          minHeight: APP_CONTENT_WRAPPER_MIN_HEIGHT
+          minHeight: APP_CONTENT_WRAPPER_MIN_HEIGHT,
+          pointerEvents: disablePointerEvents ? 'none' : undefined
         }}
       >
         {children}

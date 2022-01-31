@@ -46,6 +46,7 @@ export default class WindowManager implements IWindowManager, IProcess {
       height$: new BehaviorSubject<number>(600),
       resizable$: new BehaviorSubject<boolean>(true),
       movable$: new BehaviorSubject<boolean>(true),
+      isResizing$: new BehaviorSubject<boolean>(false),
       zIndex$: new BehaviorSubject<number>(0),
 
       component$: new BehaviorSubject<React.FC | null>(null),

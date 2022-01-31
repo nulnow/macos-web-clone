@@ -6,6 +6,7 @@ import {
   APP_CONTENT_WRAPPER_MIN_WIDTH,
 } from '../../components/app-layout/consts';
 import WindowManager from '../../services/WindowManager';
+import {useBehaviorSubject} from '../rx/useBehaviorSubject';
 
 enum ResizeDirection {
   TOP,
@@ -35,11 +36,12 @@ export interface IUseWindowResizeReturn {
 }
 
 export const useWindowResize = (window: IWindow): IUseWindowResizeReturn => {
+  const isResizing: boolean = useBehaviorSubject(window.isResizing$);
+
   // eslint-disable-next-line @typescript-eslint/typedef
   const data = useRef({
     clientX: 0,
     clientY: 0,
-    isResizing: false,
     resizeDirection: ResizeDirection.TOP,
 
     initialY: 0,
@@ -50,7 +52,6 @@ export const useWindowResize = (window: IWindow): IUseWindowResizeReturn => {
   } as {
     clientX: number;
     clientY: number;
-    isResizing: boolean;
     resizeDirection: ResizeDirection;
 
     initialY: number;
@@ -64,7 +65,8 @@ export const useWindowResize = (window: IWindow): IUseWindowResizeReturn => {
     return {
       onMouseDown: (event): void => {
         event.preventDefault();
-        data.current.isResizing = true;
+        window.isResizing$.next(true);
+
         data.current.resizeDirection = direction;
         data.current.clientX = event.clientX;
         data.current.clientY = event.clientY;
@@ -79,7 +81,7 @@ export const useWindowResize = (window: IWindow): IUseWindowResizeReturn => {
   };
 
   useDocumentEvent('mousemove', event => {
-    if (!data.current.isResizing) {
+    if (!isResizing) {
       return;
     }
 
@@ -168,7 +170,7 @@ export const useWindowResize = (window: IWindow): IUseWindowResizeReturn => {
   });
 
   useDocumentEvent('mouseup', () => {
-    data.current.isResizing = false;
+    window.isResizing$.next(false);
   });
 
   return {

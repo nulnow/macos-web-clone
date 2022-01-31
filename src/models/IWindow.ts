@@ -15,6 +15,7 @@ export interface IWindow {
   y$: BehaviorSubject<number>;
   width$: BehaviorSubject<number>;
   height$: BehaviorSubject<number>;
+  isResizing$: BehaviorSubject<boolean>;
   zIndex$: BehaviorSubject<number>;
 
   component$: BehaviorSubject<FC<{window?: IWindow}> | null>;

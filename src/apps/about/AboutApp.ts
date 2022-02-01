@@ -1,10 +1,10 @@
-import {IProcess} from '../../models/IProcess';
-import {IAppFactory} from '../../models/IAppFactory';
-import {ISystem} from '../../models/ISystem';
-import {IProcessStream} from '../../models/IProcessStream';
-import {IShortcut} from '../../models/IShortcut';
+import {IProcess} from '../../interfaces/IProcess';
+import {IAppFactory} from '../../interfaces/IAppFactory';
+import {ISystem} from '../../interfaces/ISystem';
+import {IProcessStream} from '../../interfaces/IProcessStream';
+import {IShortcut} from '../../interfaces/IShortcut';
 import aboutIcon from '../../../resources/apps/about/icon.svg';
-import {IWindow} from '../../models/IWindow';
+import {IWindow} from '../../interfaces/IWindow';
 import React, {FC} from 'react';
 import TerminalAppComponent from '../terminal/TerminalAppComponent';
 import TerminalApp from '../terminal/TerminalApp';

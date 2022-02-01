@@ -1,10 +1,10 @@
-import {IProcess} from '../../models/IProcess';
-import {ISystem} from '../../models/ISystem';
-import {IProcessStream} from '../../models/IProcessStream';
-import {IAppFactory} from '../../models/IAppFactory';
-import {IWindow} from '../../models/IWindow';
+import {IProcess} from '../../interfaces/IProcess';
+import {ISystem} from '../../interfaces/ISystem';
+import {IProcessStream} from '../../interfaces/IProcessStream';
+import {IAppFactory} from '../../interfaces/IAppFactory';
+import {IWindow} from '../../interfaces/IWindow';
 import {BehaviorSubject, Subscription} from 'rxjs';
-import {IShortcut} from '../../models/IShortcut';
+import {IShortcut} from '../../interfaces/IShortcut';
 import TerminalApp from '../terminal/TerminalApp';
 import CyberBirdApp from '../cyber-bird/CyberBirdApp';
 import WallpaperApp from '../wallpaper/WallpaperApp';

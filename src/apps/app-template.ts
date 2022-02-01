@@ -1,9 +1,9 @@
-import {ISystem} from '../models/ISystem';
-import {IProcessStream} from '../models/IProcessStream';
-import {IProcess} from '../models/IProcess';
-import {IWindow} from '../models/IWindow';
-import {IAppFactory} from '../models/IAppFactory';
-import {IShortcut} from '../models/IShortcut';
+import {ISystem} from '../interfaces/ISystem';
+import {IProcessStream} from '../interfaces/IProcessStream';
+import {IProcess} from '../interfaces/IProcess';
+import {IWindow} from '../interfaces/IWindow';
+import {IAppFactory} from '../interfaces/IAppFactory';
+import {IShortcut} from '../interfaces/IShortcut';
 
 import icon from '../../resources/apps/terminal/icon.svg';
 import WindowManager from '../services/WindowManager';

@@ -1,5 +1,5 @@
 import {BehaviorSubject, Subscription} from 'rxjs';
-import {IWindow} from '../../models/IWindow';
+import {IWindow} from '../../interfaces/IWindow';
 
 export const mapWindowsSubjectToCollapsedWindowsSubject = (windows$: BehaviorSubject<IWindow[]>): BehaviorSubject<IWindow[]> => {
   const getCollapsed = (windows: IWindow[]): IWindow[] => windows.filter(w => w.transform$.getValue().collapsed);

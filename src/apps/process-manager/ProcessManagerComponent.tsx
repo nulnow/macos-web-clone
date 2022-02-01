@@ -1,8 +1,8 @@
 import React, {FC, useState} from 'react';
 import AppLayout from '../../components/app-layout/AppLayout';
-import {IWindow} from '../../models/IWindow';
+import {IWindow} from '../../interfaces/IWindow';
 import ProcessManager from './ProcessManager';
-import {IProcess} from '../../models/IProcess';
+import {IProcess} from '../../interfaces/IProcess';
 import {useBehaviorSubject} from '../../utils/rx/useBehaviorSubject';
 
 import styles from './ProcessManager.module.scss';

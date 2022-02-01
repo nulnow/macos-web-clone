@@ -22,13 +22,33 @@
   height: 30px;
   margin: 0 auto;
   border: 0;
-  //border: 1px solid #d9d9d9;
   border-radius: 10px;
   padding: 0 40px;
   background-color: #f3f3f3;
 
   &:focus {
     outline: 4px solid #2485ff;
+  }
+}
+
+.newTabButton {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+
+  cursor: default;
+  width: 20px;
+  height: 20px;
+  margin-left: 4px;
+  border-radius: 4px;
+  user-select: none;
+
+  &:hover {
+    background-color: #eeeeee;
+  }
+  &:active {
+    background-color: #d5d5d5;
   }
 }
 
@@ -46,9 +66,10 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
-  align-content: flex-start;
+  align-items: flex-start;
   gap: 40px;
 
+  //width: 1000px;
   padding: 40px;
 }
 
@@ -72,4 +93,14 @@
   &:hover {
     background-color: rgba(147, 147, 147, 0.59);
   }
+}
+
+.tabs {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  background-color: #dedede;
+  user-select: none;
 }

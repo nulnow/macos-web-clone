@@ -1,5 +1,5 @@
-import {ISystem} from '../../models/ISystem';
-import {IWindowManager} from '../../models/IWindowManager';
+import {ISystem} from '../../interfaces/ISystem';
+import {IWindowManager} from '../../interfaces/IWindowManager';
 
 export interface IGlobalContext {
   system: ISystem;

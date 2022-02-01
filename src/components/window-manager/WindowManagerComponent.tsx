@@ -1,12 +1,12 @@
 import React, {FC} from 'react';
-import {IWindowManager} from '../../models/IWindowManager';
+import {IWindowManager} from '../../interfaces/IWindowManager';
 import styles from './WindowManager.module.scss';
 import Head from 'next/head';
 import WindowComponent from '../window-component/WindowComponent';
 import Navbar from '../navbar/Navbar';
 import Dock from '../dock/Dock';
 import {useBehaviorSubject} from '../../utils/rx/useBehaviorSubject';
-import {IWindow} from '../../models/IWindow';
+import {IWindow} from '../../interfaces/IWindow';
 import WallpaperApp from '../../apps/wallpaper/WallpaperApp';
 
 const WindowManagerComponent: FC<{windowManager: IWindowManager}> = ({

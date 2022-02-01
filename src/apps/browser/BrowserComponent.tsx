@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {IWindow} from '../../models/IWindow';
+import {IWindow} from '../../interfaces/IWindow';
 import BrowserApp from './BrowserApp';
 import styles from './Browser.module.scss';
 import AppLayout from '../../components/app-layout/AppLayout';
@@ -7,11 +7,18 @@ import {useGlobalContext} from '../../contexts/global-context/useGlobalContext';
 import {useBehaviorSubject} from '../../utils/rx/useBehaviorSubject';
 
 import wikipediaIcon from '../../../resources/apps/browser/bookmarks/wikipedia-icon.svg';
+import freeMusicIcon from '../../../resources/apps/browser/bookmarks/freemusic.ico';
+
+import {ITab} from './ITab';
+import Tab from './components/Tab';
 
 const BrowserComponent: FC<{ window: IWindow, app: BrowserApp }> = ({window, app}) => {
   const {system} = useGlobalContext();
-  const inputText: string = useBehaviorSubject(app.inputText$);
-  const url: string = useBehaviorSubject(app.url$);
+  const tabs: ITab[] = useBehaviorSubject(app.tabs$);
+  const selectedTab: ITab = useBehaviorSubject(app.selectedTab$);
+  const {
+    inputText: selectedTabInputText,
+  } = useBehaviorSubject(selectedTab.asBehaviorSubject());
 
   return (
     <AppLayout window={window} onRedButtonClick={(): void => system.killProcess(app.pid)}>
@@ -21,28 +28,77 @@ const BrowserComponent: FC<{ window: IWindow, app: BrowserApp }> = ({window, app
             type='text'
             placeholder="Enter url"
             className={styles.urlField}
-            value={inputText}
+            value={selectedTabInputText ?? ''}
             onKeyPress={(event): void => {
               if (event.key === 'Enter') {
-                app.url$.next(inputText);
+                selectedTab.setUrl(selectedTabInputText);
               }
             }}
-            onBlur={(): void => app.url$.next(inputText)}
-            onChange={(event): void => app.inputText$.next(event.target.value)}
+            onBlur={(): void => selectedTab.setUrl(selectedTabInputText)}
+            onChange={(event): void => selectedTab.setInputText(event.target.value)}
           />
         </div>
-        {url ? (
-          <iframe className={styles.page} frameBorder={0} src={url} />
-        ) : (
-          <div className={styles.bookmarks}>
-            <div role="button" className={styles.bookmark} onClick={(): void => {
-              app.inputText$.next('https://www.wikipedia.org/');
-              app.url$.next('https://www.wikipedia.org/');
-            }}>
-              <img src={wikipediaIcon.src} alt='wikipedia bookmark' />
-            </div>
-          </div>
-        )}
+        <div className={styles.tabs}>
+          {tabs.map(tab => {
+            const isSelected: boolean = selectedTab.id === tab.id;
+            return (
+              <Tab
+                key={tab.id}
+                isSelected={isSelected}
+                tab={tab}
+                onClick={(): void => app.setSelectedTab(tab)}
+                onClose={(): void => app.onCloseTabClick(tab)}
+              />
+            );
+          })}
+          <div role="button" onClick={(): void => {app.onNewTabClick();}} className={styles.newTabButton}>+</div>
+        </div>
+        {tabs.map(tab => {
+          const isSelected: boolean = selectedTab.id === tab.id;
+          const tabUrl: string | null = tab.getUrl();
+
+          if (!tabUrl) {
+            return (
+              <div className={styles.bookmarks} key={tab.id}
+                   style={{
+                     display: isSelected ? undefined : 'none',
+                     pointerEvents: isSelected ? undefined : 'none'
+                   }}
+              >
+                <div role="button" className={styles.bookmark} onClick={(): void => {
+                  tab.setUrl('https://www.wikipedia.org/');
+                }}>
+                  <img src={wikipediaIcon.src} alt='wikipedia bookmark' />
+                </div>
+
+                <div role="button" className={styles.bookmark} onClick={(): void => {
+                  tab.setUrl('https://freeplaymusic.com/#/');
+                }}>
+                  <img src={freeMusicIcon.src} alt='free Music bookmark' />
+                </div>
+
+                <div role="button" className={styles.bookmark} onClick={(): void => {
+                  tab.setUrl('https://bing.com');
+                }}>
+                  <img src="https://www.vectorlogo.zone/logos/bing/bing-icon.svg" alt='free Music bookmark' />
+                </div>
+              </div>
+            );
+          }
+
+          return (
+            <iframe
+              key={tab.id}
+              className={styles.page}
+              style={{
+                display: isSelected ? 'block' : 'none',
+                pointerEvents: isSelected ? undefined : 'none'
+              }}
+              frameBorder={0}
+              src={tabUrl}
+            />
+          );
+        })}
       </div>
     </AppLayout>
   );

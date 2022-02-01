@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import styles from './AppLayout.module.scss';
 import AppWindowControls from '../app-window-controls/AppWindowControls';
-import {IWindow} from '../../models/IWindow';
+import {IWindow} from '../../interfaces/IWindow';
 import {useBehaviorSubject} from '../../utils/rx/useBehaviorSubject';
 import {useGlobalContext} from '../../contexts/global-context/useGlobalContext';
 import {

@@ -1,7 +1,7 @@
-import {IWindow} from '../../models/IWindow';
+import {IWindow} from '../../interfaces/IWindow';
 import {DragEventHandler, useRef} from 'react';
 import {useDocumentEvent} from '../dom/useDocumentEvent';
-import {IWindowManager} from '../../models/IWindowManager';
+import {IWindowManager} from '../../interfaces/IWindowManager';
 import {useBehaviorSubject} from '../rx/useBehaviorSubject';
 import WindowManager from '../../services/WindowManager';
 

@@ -1,7 +1,7 @@
 import {IGlobalContext} from './IGlobalContext';
 import System from '../../services/System';
-import {ISystem} from '../../models/ISystem';
-import {IWindowManager} from '../../models/IWindowManager';
+import {ISystem} from '../../interfaces/ISystem';
+import {IWindowManager} from '../../interfaces/IWindowManager';
 
 export const createGlobalContext = (): IGlobalContext => {
   const system: ISystem = new System();

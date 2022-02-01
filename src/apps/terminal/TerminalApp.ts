@@ -1,13 +1,13 @@
-import {IAppFactory} from '../../models/IAppFactory';
-import {IProcess} from '../../models/IProcess';
-import {ISystem} from '../../models/ISystem';
-import {IProcessStream} from '../../models/IProcessStream';
-import {IWindow} from '../../models/IWindow';
+import {IAppFactory} from '../../interfaces/IAppFactory';
+import {IProcess} from '../../interfaces/IProcess';
+import {ISystem} from '../../interfaces/ISystem';
+import {IProcessStream} from '../../interfaces/IProcessStream';
+import {IWindow} from '../../interfaces/IWindow';
 import {BehaviorSubject} from 'rxjs';
 import WindowManager from '../../services/WindowManager';
 import React, {FC} from 'react';
 import TerminalAppComponent from './TerminalAppComponent';
-import {IShortcut} from '../../models/IShortcut';
+import {IShortcut} from '../../interfaces/IShortcut';
 
 import terminalIcon from '../../../resources/apps/terminal/icon.svg';
 

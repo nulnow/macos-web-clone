@@ -1,8 +1,8 @@
-import {IProcess} from '../../models/IProcess';
-import {ISystem} from '../../models/ISystem';
-import {IProcessStream} from '../../models/IProcessStream';
-import {IAppFactory} from '../../models/IAppFactory';
-import {IWindow} from '../../models/IWindow';
+import {IProcess} from '../../interfaces/IProcess';
+import {ISystem} from '../../interfaces/ISystem';
+import {IProcessStream} from '../../interfaces/IProcessStream';
+import {IAppFactory} from '../../interfaces/IAppFactory';
+import {IWindow} from '../../interfaces/IWindow';
 import {BehaviorSubject} from 'rxjs';
 
 import wp1 from '../../../resources/apps/wallpaper/wallpapers/wp1.gif';
@@ -10,7 +10,7 @@ import wp2 from '../../../resources/apps/wallpaper/wallpapers/wp2.gif';
 import wp3 from '../../../resources/apps/wallpaper/wallpapers/wp3.gif';
 import wp4 from '../../../resources/apps/wallpaper/wallpapers/wp4.svg';
 
-import {IShortcut} from '../../models/IShortcut';
+import {IShortcut} from '../../interfaces/IShortcut';
 import WindowManager from '../../services/WindowManager';
 import WallpaperAppComponent from './WallpaperAppComponent';
 import React, {FC} from 'react';

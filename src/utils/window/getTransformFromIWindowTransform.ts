@@ -1,4 +1,4 @@
-import {IWindowTransform} from '../../models/IWindowTransform';
+import {IWindowTransform} from '../../interfaces/IWindowTransform';
 
 export const getTransformFromIWindowTransform = (
   transformObj: IWindowTransform

@@ -1,7 +1,7 @@
 import React, {FC, MutableRefObject, useEffect, useRef} from 'react';
 import AppLayout from '../../components/app-layout/AppLayout';
 import TerminalApp from './TerminalApp';
-import {IWindow} from '../../models/IWindow';
+import {IWindow} from '../../interfaces/IWindow';
 import {useStreamToDisplay} from './useStreamToDisplay';
 
 const TerminalAppComponent: FC<{

@@ -6,10 +6,10 @@ import DockShortcut from './dock-shortcut/DockShortcut';
 import {DOCK_WIDTH} from './consts';
 import WindowComponent from '../window-component/WindowComponent';
 import {BehaviorSubject} from 'rxjs';
-import {IWindowTransform} from '../../models/IWindowTransform';
+import {IWindowTransform} from '../../interfaces/IWindowTransform';
 import {DOCK_ICON_SIZE} from './dock-shortcut/consts';
-import {IWindow} from '../../models/IWindow';
-import {IShortcut} from '../../models/IShortcut';
+import {IWindow} from '../../interfaces/IWindow';
+import {IShortcut} from '../../interfaces/IShortcut';
 import {DockApp} from '../../apps/dock/DockApp';
 
 const Dock: FC = () => {

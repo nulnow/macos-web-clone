@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import styles from './DockShortcut.module.scss';
-import {IShortcut} from '../../../models/IShortcut';
+import {IShortcut} from '../../../interfaces/IShortcut';
 import {DOCK_ICON_SIZE} from './consts';
 
 const DockShortcut: FC<{shortcut: IShortcut}> = ({shortcut}) => {

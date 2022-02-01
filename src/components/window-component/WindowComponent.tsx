@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {IWindow} from '../../models/IWindow';
+import {IWindow} from '../../interfaces/IWindow';
 import {useBehaviorSubject} from '../../utils/rx/useBehaviorSubject';
 
 const WindowComponent: FC<{window: IWindow}> = ({window}) => {

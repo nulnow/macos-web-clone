@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import AppLayout from '../../components/app-layout/AppLayout';
-import {IWindow} from '../../models/IWindow';
+import {IWindow} from '../../interfaces/IWindow';
 import WallpaperApp from './WallpaperApp';
 import {useBehaviorSubject} from '../../utils/rx/useBehaviorSubject';
 import styles from './WallpaperApp.module.scss';

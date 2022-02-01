@@ -1,11 +1,11 @@
-import {IWindowManager} from '../models/IWindowManager';
+import {IWindowManager} from '../interfaces/IWindowManager';
 import {BehaviorSubject} from 'rxjs';
-import {IWindow} from '../models/IWindow';
+import {IWindow} from '../interfaces/IWindow';
 import React, {ReactElement} from 'react';
-import {IAppFactory} from '../models/IAppFactory';
-import {ISystem} from '../models/ISystem';
-import {IProcess} from '../models/IProcess';
-import {IProcessStream} from '../models/IProcessStream';
+import {IAppFactory} from '../interfaces/IAppFactory';
+import {ISystem} from '../interfaces/ISystem';
+import {IProcess} from '../interfaces/IProcess';
+import {IProcessStream} from '../interfaces/IProcessStream';
 import WindowManagerComponent from '../components/window-manager/WindowManagerComponent';
 import {DockApp} from '../apps/dock/DockApp';
 import {NAVBAR_HEIGHT} from '../components/navbar/consts';
@@ -13,7 +13,7 @@ import {APP_HEADER_HEIGHT} from '../components/app-layout/consts';
 import {DOCK_WIDTH} from '../components/dock/consts';
 import {tween} from '../utils/rx/tween';
 import {decrease} from '../utils/rx/decrease';
-import {IWindowTransform} from '../models/IWindowTransform';
+import {IWindowTransform} from '../interfaces/IWindowTransform';
 
 const browserWindow: Window = ((): Window => {
   return globalThis as any as Window;

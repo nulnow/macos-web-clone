@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {IWindow} from '../../../models/IWindow';
+import {IWindow} from '../../../interfaces/IWindow';
 import TalkingFaceApp from '../TalkingFaceApp';
 import AppLayout from '../../../components/app-layout/AppLayout';
 

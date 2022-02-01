@@ -1,14 +1,14 @@
-import {IProcess} from '../../models/IProcess';
-import {ISystem} from '../../models/ISystem';
-import {IProcessStream} from '../../models/IProcessStream';
-import {IAppFactory} from '../../models/IAppFactory';
-import {IWindow} from '../../models/IWindow';
+import {IProcess} from '../../interfaces/IProcess';
+import {ISystem} from '../../interfaces/ISystem';
+import {IProcessStream} from '../../interfaces/IProcessStream';
+import {IAppFactory} from '../../interfaces/IAppFactory';
+import {IWindow} from '../../interfaces/IWindow';
 import WindowManager from '../../services/WindowManager';
 import {BehaviorSubject} from 'rxjs';
 import {useBehaviorSubject} from '../../utils/rx/useBehaviorSubject';
 import React from 'react';
 import AppLayout from '../../components/app-layout/AppLayout';
-import {IShortcut} from '../../models/IShortcut';
+import {IShortcut} from '../../interfaces/IShortcut';
 
 export default class WardaemonApp implements IProcess {
   public static readonly paintAppAppFactory: IAppFactory<WardaemonApp> = {

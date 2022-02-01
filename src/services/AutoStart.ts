@@ -1,9 +1,9 @@
-import {IAutoStart} from '../models/IAutoStart';
-import {IProcess} from '../models/IProcess';
-import {IAppFactory} from '../models/IAppFactory';
-import {ISystem} from '../models/ISystem';
-import {IProcessStream} from '../models/IProcessStream';
-import {IWindow} from '../models/IWindow';
+import {IAutoStart} from '../interfaces/IAutoStart';
+import {IProcess} from '../interfaces/IProcess';
+import {IAppFactory} from '../interfaces/IAppFactory';
+import {ISystem} from '../interfaces/ISystem';
+import {IProcessStream} from '../interfaces/IProcessStream';
+import {IWindow} from '../interfaces/IWindow';
 import BrowserApp from '../apps/browser/BrowserApp';
 
 export default class AutoStart implements IAutoStart, IProcess {
@@ -41,9 +41,7 @@ export default class AutoStart implements IAutoStart, IProcess {
     mainWindow.x$.next(140);
     mainWindow.width$.next(800);
     mainWindow.height$.next(600);
-    browserProcess.inputText$.next('https://www.wikipedia.org/');
-    browserProcess.url$.next('https://www.wikipedia.org/');
-
+    // browserProcess.setSelectedTab('https://www.wikipedia.org/');
     // this.system.spawnProcess(WallpaperApp.wallpaperAppFactory);
   }
 

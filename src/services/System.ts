@@ -1,11 +1,11 @@
 import {BehaviorSubject} from 'rxjs';
-import {ISystem} from '../models/ISystem';
-import {IWindowManager} from '../models/IWindowManager';
-import {IAppFactory} from '../models/IAppFactory';
-import {IProcess} from '../models/IProcess';
-import {IProcessStream} from '../models/IProcessStream';
+import {ISystem} from '../interfaces/ISystem';
+import {IWindowManager} from '../interfaces/IWindowManager';
+import {IAppFactory} from '../interfaces/IAppFactory';
+import {IProcess} from '../interfaces/IProcess';
+import {IProcessStream} from '../interfaces/IProcessStream';
 import WindowManager from './WindowManager';
-import {IWindow} from '../models/IWindow';
+import {IWindow} from '../interfaces/IWindow';
 import AutoStart from './AutoStart';
 
 export default class System implements ISystem {

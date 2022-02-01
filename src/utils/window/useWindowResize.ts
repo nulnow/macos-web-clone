@@ -1,4 +1,4 @@
-import {IWindow} from '../../models/IWindow';
+import {IWindow} from '../../interfaces/IWindow';
 import {MouseEventHandler, useRef} from 'react';
 import {useDocumentEvent} from '../dom/useDocumentEvent';
 import {

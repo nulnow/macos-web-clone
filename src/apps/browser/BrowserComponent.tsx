@@ -83,12 +83,6 @@ const BrowserComponent: FC<{ window: IWindow, app: BrowserApp }> = ({window, app
                   <img src="https://www.vectorlogo.zone/logos/bing/bing-icon.svg" alt='free Music bookmark' />
                 </div>
 
-                <div role="button" className={styles.bookmark} onClick={(): void => {
-                  tab.setUrl('https://mp3gid.me/298266-aleks-ataman-finikfinya-dialogi-tet-a-tet.html');
-                }}>
-                  <img src="https://www.vectorlogo.zone/logos/bing/bing-icon.svg" alt='free Music bookmark' />
-                </div>
-
               </div>
             );
           }

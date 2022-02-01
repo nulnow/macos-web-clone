@@ -95,7 +95,7 @@ export default class WallpaperApp implements IProcess {
       title$: new BehaviorSubject<string>('Wallpaper'),
     });
     window.width$.next(500);
-    window.height$.next(600);
+    window.height$.next(500);
     this.mainWindow = this.system.getWindowManager().createWindow(window);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore

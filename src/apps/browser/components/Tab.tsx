@@ -8,7 +8,7 @@ const Tab: FC<{tab: ITab, isSelected?: boolean, onClick?: () => void, onClose?: 
 
   return (
     <div className={`${styles.Tab} ${isSelected ? styles.selectedTab : ''}`} role="button" onClick={onClick}>
-      <div className={styles.tabText}>{url ?? 'New tab'}</div>
+      <p className={styles.tabText}>{url ?? 'New tab'}</p>
       <div className={styles.closeButton} onClick={(event): void => {
         event.stopPropagation();
         onClose?.();

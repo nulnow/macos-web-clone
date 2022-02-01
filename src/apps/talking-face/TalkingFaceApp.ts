@@ -115,7 +115,7 @@ export default class TalkingFaceApp implements IProcess {
     this.leftEyeWindow.height$.next(100);
 
     this.leftEyeWindow.x$.next(200);
-    this.leftEyeWindow.y$.next(300);
+    this.leftEyeWindow.y$.next(100);
 
     this.leftEyeWindow.resizable$.next(false);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -136,7 +136,7 @@ export default class TalkingFaceApp implements IProcess {
     this.rightEyeWindow.height$.next(100);
 
     this.rightEyeWindow.x$.next(510);
-    this.rightEyeWindow.y$.next(300);
+    this.rightEyeWindow.y$.next(100);
 
     this.rightEyeWindow.resizable$.next(false);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -157,7 +157,7 @@ export default class TalkingFaceApp implements IProcess {
     this.mouthWindow.height$.next(200);
 
     this.mouthWindow.x$.next(200);
-    this.mouthWindow.y$.next(450);
+    this.mouthWindow.y$.next(250);
 
     this.mouthWindow.resizable$.next(false);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

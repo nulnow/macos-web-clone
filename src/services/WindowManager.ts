@@ -42,8 +42,8 @@ export default class WindowManager implements IWindowManager, IProcess {
 
       x$: new BehaviorSubject<number>(0),
       y$: new BehaviorSubject<number>(0),
-      width$: new BehaviorSubject<number>(800),
-      height$: new BehaviorSubject<number>(600),
+      width$: new BehaviorSubject<number>(700),
+      height$: new BehaviorSubject<number>(500),
       resizable$: new BehaviorSubject<boolean>(true),
       movable$: new BehaviorSubject<boolean>(true),
       isResizing$: new BehaviorSubject<boolean>(false),
@@ -209,13 +209,13 @@ export default class WindowManager implements IWindowManager, IProcess {
 
   public unexpand(window: IWindow): void {
     const HEIGHT_FROM: number = window.height$.getValue();
-    const HEIGHT_TO: number = 600;
+    const HEIGHT_TO: number = 400;
     decrease(HEIGHT_TO, HEIGHT_FROM, WindowManager.ANIMATION_DURATION).subscribe(x => {
       window.height$.next(x);
     });
 
     const WIDTH_FROM: number = window.width$.getValue();
-    const WIDTH_TO: number = 800;
+    const WIDTH_TO: number = 600;
     decrease(WIDTH_TO, WIDTH_FROM, WindowManager.ANIMATION_DURATION).subscribe(x => {
       window.width$.next(x);
     });

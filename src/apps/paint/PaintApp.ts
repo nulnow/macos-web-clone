@@ -52,8 +52,8 @@ export default class PaintApp implements IProcess {
   public start(): void {
     const that: PaintApp = this;
     const window: IWindow = WindowManager.createBlankWindow(this, {
-      width$: new BehaviorSubject<number>(1000),
-      height$: new BehaviorSubject<number>(700),
+      width$: new BehaviorSubject<number>(800),
+      height$: new BehaviorSubject<number>(500),
       title$: new BehaviorSubject<string>('Paint online')
     });
     this.system.getWindowManager().createWindow(window);

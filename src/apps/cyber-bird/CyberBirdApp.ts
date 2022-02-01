@@ -41,9 +41,9 @@ export default class CyberBirdApp implements IProcess {
     };
   }
 
-  private static readonly WIDTH = 800;
+  private static readonly WIDTH = 600;
 
-  private static readonly HEIGHT = 609;
+  private static readonly HEIGHT = 500;
 
   public readonly meta = {
     name: 'Cyber Bird'

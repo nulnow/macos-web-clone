@@ -59,30 +59,42 @@ const BrowserComponent: FC<{ window: IWindow, app: BrowserApp }> = ({window, app
 
           if (!tabUrl) {
             return (
-              <div className={styles.bookmarks} key={tab.id}
-                   style={{
-                     display: isSelected ? undefined : 'none',
-                     pointerEvents: isSelected ? undefined : 'none'
-                   }}
-              >
-                <div role="button" className={styles.bookmark} onClick={(): void => {
-                  tab.setUrl('https://www.wikipedia.org/');
-                }}>
-                  <img src={wikipediaIcon.src} alt='wikipedia bookmark' />
+              <div key={tab.id} style={{ width: '100%', maxWidth: 600, margin: '0 auto', display: isSelected ? undefined : 'none',
+                pointerEvents: isSelected ? undefined : 'none' }}>
+                <div className={styles.searchWrapper}>
+                  <input
+                    type='text'
+                    placeholder="Search with Bing"
+                    className={styles.searchField}
+                    onKeyPress={(event): void => {
+                      if (event.key === 'Enter') {
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
+                        tab.setUrl(`https://bing.com/search?q=${event.target.value}`);
+                      }
+                    }}
+                  />
                 </div>
+                <div className={styles.bookmarks}>
+                  <div role="button" className={styles.bookmark} onClick={(): void => {
+                    tab.setUrl('https://www.wikipedia.org/');
+                  }}>
+                    <img src={wikipediaIcon.src} alt='wikipedia bookmark' />
+                  </div>
 
-                <div role="button" className={styles.bookmark} onClick={(): void => {
-                  tab.setUrl('https://freeplaymusic.com/#/');
-                }}>
-                  <img src={freeMusicIcon.src} alt='free Music bookmark' />
+                  <div role="button" className={styles.bookmark} onClick={(): void => {
+                    tab.setUrl('https://freeplaymusic.com/#/');
+                  }}>
+                    <img src={freeMusicIcon.src} alt='free Music bookmark' />
+                  </div>
+
+                  <div role="button" className={styles.bookmark} onClick={(): void => {
+                    tab.setUrl('https://bing.com');
+                  }}>
+                    <img src="https://www.vectorlogo.zone/logos/bing/bing-icon.svg" alt='free Music bookmark' />
+                  </div>
+
                 </div>
-
-                <div role="button" className={styles.bookmark} onClick={(): void => {
-                  tab.setUrl('https://bing.com');
-                }}>
-                  <img src="https://www.vectorlogo.zone/logos/bing/bing-icon.svg" alt='free Music bookmark' />
-                </div>
-
               </div>
             );
           }

@@ -87,10 +87,18 @@ export default class BrowserApp implements IProcess {
   }
 
   public onCloseTabClick(tab: ITab): void {
+    if (!tab.getUrl() && this.tabs$.getValue().length === 1) {
+      return;
+    }
     this.tabs$.next(
       this.tabs$.getValue().filter(t => t.id !== tab.id)
     );
-    if (this.tabs$.getValue().length === 0) {
+    const selectedTab: ITab = this.selectedTab$.getValue();
+    const tabs: ITab[] = this.tabs$.getValue();
+    if (tab.id === selectedTab.id && tabs.length !== 0) {
+      this.setSelectedTab(tabs[tabs.length - 1]);
+    }
+    if (tabs.length === 0) {
       const lastTab: ITab = new Tab(BrowserApp.getUniqueTabId());
       this.tabs$.next([lastTab]);
       this.setSelectedTab(lastTab);

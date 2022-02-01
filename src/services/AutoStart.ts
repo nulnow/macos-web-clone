@@ -40,7 +40,7 @@ export default class AutoStart implements IAutoStart, IProcess {
     mainWindow.y$.next(100);
     mainWindow.x$.next(140);
     mainWindow.width$.next(700);
-    mainWindow.height$.next(500);
+    mainWindow.height$.next(400);
     // browserProcess.setSelectedTab('https://www.wikipedia.org/');
     // this.system.spawnProcess(WallpaperApp.wallpaperAppFactory);
   }

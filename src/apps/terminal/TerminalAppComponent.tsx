@@ -23,22 +23,22 @@ const TerminalAppComponent: FC<{
       window={window}
       onRedButtonClick={(): void => terminalApp.onCloseClick()}
     >
-      <div style={{padding: 8, height: '100%'}}>
-        <pre
-          ref={outputRef as MutableRefObject<HTMLPreElement>}
-          style={{
-            margin: 0,
-            color: 'greenyellow',
-            fontFamily: 'monospace',
-            fontWeight: 100,
-            fontSize: 14,
-            height: '100%',
-            overflow: 'scroll',
-          }}
-        >
+      <pre
+        ref={outputRef as MutableRefObject<HTMLPreElement>}
+        style={{
+          margin: 0,
+          color: 'greenyellow',
+          fontFamily: 'monospace',
+          fontWeight: 100,
+          fontSize: 14,
+          height: '100%',
+          overflow: 'hidden',
+          overflowY: 'scroll',
+          padding: 5
+        }}
+      >
           {terminalText}
         </pre>
-      </div>
     </AppLayout>
   );
 };

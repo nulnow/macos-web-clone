@@ -99,7 +99,7 @@ $windowBorderRadius: 13px;
   backdrop-filter: blur(25px);
   background-color: rgba(0, 0, 0, 0.5);
 
-  overflow: scroll;
+  overflow: hidden;
 
   @include shadow;
 }

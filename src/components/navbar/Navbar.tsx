@@ -5,8 +5,10 @@ import {NAVBAR_HEIGHT} from './consts';
 const Navbar: FC = () => {
   return (
     <div className={styles.navbar} style={{height: NAVBAR_HEIGHT}}>
-      <div style={{fontWeight: 500}}>Bolgen OS 2.0</div>
-      <div>23%</div>
+      <div style={{fontWeight: 500}}>Nulnow.com</div>
+      <div>
+        <a href="andrey-razuvaev-resume.pdf" style={{textDecoration: 'underline'}} target="blank">resume.pdf</a>
+      </div>
     </div>
   );
 };

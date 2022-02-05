@@ -4,7 +4,7 @@ import {IAppFactory} from '../interfaces/IAppFactory';
 import {ISystem} from '../interfaces/ISystem';
 import {IProcessStream} from '../interfaces/IProcessStream';
 import {IWindow} from '../interfaces/IWindow';
-import BrowserApp from '../apps/browser/BrowserApp';
+import AboutApp from '../apps/about/AboutApp';
 
 export default class AutoStart implements IAutoStart, IProcess {
   public static autoStartFactory: IAppFactory<AutoStart> = {
@@ -32,15 +32,15 @@ export default class AutoStart implements IAutoStart, IProcess {
   ) {}
 
   public start(): void {
-    const browserProcess: BrowserApp = this.system.spawnProcess(
-      BrowserApp.factory
+    const aboutApp: AboutApp = this.system.spawnProcess(
+      AboutApp.aboutAppFactory
     );
-    const mainWindow: IWindow = browserProcess.getWindows()[0];
+    const mainWindow: IWindow = aboutApp.getWindows()[0];
 
     mainWindow.y$.next(100);
     mainWindow.x$.next(140);
     mainWindow.width$.next(700);
-    mainWindow.height$.next(400);
+    mainWindow.height$.next(600);
     // browserProcess.setSelectedTab('https://www.wikipedia.org/');
     // this.system.spawnProcess(WallpaperApp.wallpaperAppFactory);
   }

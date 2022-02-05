@@ -5,12 +5,12 @@ import {IProcessStream} from '../../interfaces/IProcessStream';
 import {IShortcut} from '../../interfaces/IShortcut';
 import aboutIcon from '../../../resources/apps/about/icon.svg';
 import {IWindow} from '../../interfaces/IWindow';
-import React, {FC} from 'react';
-import TerminalAppComponent from '../terminal/TerminalAppComponent';
-import TerminalApp from '../terminal/TerminalApp';
-import {useDocumentEvent} from '../../utils/dom/useDocumentEvent';
+import React from 'react';
+import AppLayout from '../../components/app-layout/AppLayout';
+import WindowManager from '../../services/WindowManager';
+import {BehaviorSubject} from 'rxjs';
 
-export default class AboutApp extends TerminalApp implements IProcess {
+export default class AboutApp implements IProcess {
   public static aboutAppFactory: IAppFactory<AboutApp> = {
     create(
       system: ISystem,
@@ -37,44 +37,70 @@ export default class AboutApp extends TerminalApp implements IProcess {
     };
   }
 
-  public static createComponent(aboutApp: AboutApp): FC<{window: IWindow}> {
-    return function AboutAppComponentWrapper({window}: {window: IWindow}) {
-      useDocumentEvent('mousemove', event => {
-        aboutApp.outputStream$.next(
-          JSON.stringify({
-            x: event.clientX,
-            y: event.clientY,
-          }) + '\n'
-        );
-      });
-
-      return React.createElement(TerminalAppComponent, {
-        terminalApp: aboutApp,
-        window,
-        scrollToBottom: true,
-      });
-    };
-  }
-
   public readonly meta = {
     name: 'About'
   };
 
   public constructor(
-    system: ISystem,
-    pid: number,
-    inputStream: IProcessStream,
-    outputStream: IProcessStream,
-    errorStream: IProcessStream
+    private system: ISystem,
+    public pid: number,
+    public inputStream$: IProcessStream,
+    public outputStream$: IProcessStream,
+    public errorStream$: IProcessStream
   ) {
-    super(system, pid, inputStream, outputStream, errorStream);
+
   }
 
+  private mainWindow: IWindow | null = null;
+
   public start(): void {
-    super.start();
+    // eslint-disable-next-line @typescript-eslint/typedef
+    const that = this;
+    const window: IWindow = WindowManager.createBlankWindow(this, {
+      width$: new BehaviorSubject<number>(600),
+      height$: new BehaviorSubject<number>(500),
+      title$: new BehaviorSubject<string>('About')
+    });
+    this.mainWindow = this.system.getWindowManager().createWindow(window);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    this.mainWindow?.component$.next(() => AboutApp.createComponent(this));
+    this.mainWindow?.component$.next(() => {
+      return function AboutAppWrapper() {
+
+        if (!that.mainWindow) {
+          throw new Error('that.mainWindow does not exist');
+        }
+
+        return React.createElement(
+          AppLayout,
+          {
+            window: that.mainWindow,
+            onRedButtonClick() {
+              that.system.killProcess(that.pid);
+            },
+          },
+          [
+            React.createElement('div', {style: {width: '100%', height: '100%', overflowY: 'scroll'}}, [
+              React.createElement('img', {
+                src: 'resume.svg',
+                // width: width,
+                // height: height,
+                style: {
+                  width: '100%',
+                },
+              }),
+            ]),
+          ]
+        );
+      };
+    });
     this.outputStream$.next('Hello there!!!');
+  }
+
+  public getWindows(): IWindow[] {
+    if (!this.mainWindow) {
+      return [];
+    }
+    return [this.mainWindow];
   }
 }

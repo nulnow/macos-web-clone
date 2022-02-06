@@ -58,7 +58,7 @@ const WindowManagerComponent: FC<{windowManager: IWindowManager}> = ({
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', '[Tracking ID]', { page_path: window.location.pathname });
+              gtag('config', 'G-Y5SGDKV8C4', { page_path: window.location.pathname });
             `,
           }}
         />

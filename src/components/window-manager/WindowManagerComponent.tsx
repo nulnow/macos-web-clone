@@ -47,6 +47,21 @@ const WindowManagerComponent: FC<{windowManager: IWindowManager}> = ({
         <link rel="icon" type="image/svg+xml" href="/icon.svg" />
         <YMInitializer accounts={[87408696]} />
         <style>{additionalCSS}</style>
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-Y5SGDKV8C4"
+        />
+
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '[Tracking ID]', { page_path: window.location.pathname });
+            `,
+          }}
+        />
       </Head>
 
       <main

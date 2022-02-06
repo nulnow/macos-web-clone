@@ -47,9 +47,7 @@ export default class AboutApp implements IProcess {
     public inputStream$: IProcessStream,
     public outputStream$: IProcessStream,
     public errorStream$: IProcessStream
-  ) {
-
-  }
+  ) {}
 
   private mainWindow: IWindow | null = null;
 
@@ -71,30 +69,15 @@ export default class AboutApp implements IProcess {
           throw new Error('that.mainWindow does not exist');
         }
 
-        return React.createElement(
-          AppLayout,
-          {
-            window: that.mainWindow,
-            onRedButtonClick() {
-              that.system.killProcess(that.pid);
-            },
-          },
-          [
-            React.createElement('div', {style: {width: '100%', height: '100%', overflowY: 'scroll'}}, [
-              React.createElement('img', {
-                src: 'resume.svg',
-                // width: width,
-                // height: height,
-                style: {
-                  width: '100%',
-                },
-              }),
-            ]),
-          ]
+        return (
+          <AppLayout window={that.mainWindow} onRedButtonClick={(): void => that.system.killProcess(that.pid)}>
+            <div style={{width: '100%', height: '100%', overflowY: 'scroll'}}>
+              <img src="resume.svg" alt="cv" style={{width: '100%'}} />
+            </div>
+          </AppLayout>
         );
       };
     });
-    this.outputStream$.next('Hello there!!!');
   }
 
   public getWindows(): IWindow[] {

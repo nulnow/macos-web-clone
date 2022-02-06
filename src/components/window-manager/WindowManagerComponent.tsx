@@ -1,7 +1,6 @@
 import React, {FC, useEffect, useState} from 'react';
 import {IWindowManager} from '../../interfaces/IWindowManager';
 import styles from './WindowManager.module.scss';
-import Head from 'next/head';
 import WindowComponent from '../window-component/WindowComponent';
 import Navbar from '../navbar/Navbar';
 import Dock from '../dock/Dock';
@@ -9,6 +8,7 @@ import {useBehaviorSubject} from '../../utils/rx/useBehaviorSubject';
 import {IWindow} from '../../interfaces/IWindow';
 import WallpaperApp from '../../apps/wallpaper/WallpaperApp';
 import {YMInitializer} from 'react-yandex-metrika';
+import Head from 'next/head';
 
 const WindowManagerComponent: FC<{windowManager: IWindowManager}> = ({
   windowManager,
@@ -46,7 +46,7 @@ const WindowManagerComponent: FC<{windowManager: IWindowManager}> = ({
         <meta name="description" content="Portfolio website" />
         <link rel="icon" type="image/svg+xml" href="/icon.svg" />
         <YMInitializer accounts={[87408696]} />
-        <style>{additionalCSS}</style>
+        <style dangerouslySetInnerHTML={{__html: additionalCSS}}/>
         <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-Y5SGDKV8C4"

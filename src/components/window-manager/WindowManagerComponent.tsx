@@ -8,6 +8,7 @@ import Dock from '../dock/Dock';
 import {useBehaviorSubject} from '../../utils/rx/useBehaviorSubject';
 import {IWindow} from '../../interfaces/IWindow';
 import WallpaperApp from '../../apps/wallpaper/WallpaperApp';
+import {YMInitializer} from 'react-yandex-metrika';
 
 const WindowManagerComponent: FC<{windowManager: IWindowManager}> = ({
   windowManager,
@@ -41,9 +42,10 @@ const WindowManagerComponent: FC<{windowManager: IWindowManager}> = ({
   return (
     <div className={styles.container}>
       <Head>
-        <title>Mac OS Web Clone</title>
+        <title>nulnow.com - Andrey Razuvaev portfolio website</title>
         <meta name="description" content="Portfolio website" />
         <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+        <YMInitializer accounts={[87408696]} />
         <style>{additionalCSS}</style>
       </Head>
 

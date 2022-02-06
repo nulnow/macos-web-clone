@@ -7,7 +7,6 @@ import Dock from '../dock/Dock';
 import {useBehaviorSubject} from '../../utils/rx/useBehaviorSubject';
 import {IWindow} from '../../interfaces/IWindow';
 import WallpaperApp from '../../apps/wallpaper/WallpaperApp';
-import {YMInitializer} from 'react-yandex-metrika';
 import Head from 'next/head';
 
 const WindowManagerComponent: FC<{windowManager: IWindowManager}> = ({
@@ -45,13 +44,11 @@ const WindowManagerComponent: FC<{windowManager: IWindowManager}> = ({
         <title>nulnow.com - Andrey Razuvaev portfolio website</title>
         <meta name="description" content="Portfolio website" />
         <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-        <YMInitializer accounts={[87408696]} />
         <style dangerouslySetInnerHTML={{__html: additionalCSS}}/>
         <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-Y5SGDKV8C4"
         />
-
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -59,6 +56,22 @@ const WindowManagerComponent: FC<{windowManager: IWindowManager}> = ({
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
               gtag('config', 'G-Y5SGDKV8C4', { page_path: window.location.pathname });
+            `,
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+               (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+               m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+               (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+            
+               ym(87408696, "init", {
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true
+               });
             `,
           }}
         />

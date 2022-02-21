@@ -1,4 +1,8 @@
-# Mac OS Web clone
+# MacOS Web React
+
+Window system built with react
+
+Visit [nulnow.com](http://nulnow.com)
 
 <img src="docs/desk.jpeg" alt="desktop">
 

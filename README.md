@@ -1,5 +1,7 @@
 # Mac OS Web clone
 
+<img src="docs/desk.jpeg" alt="desktop">
+
 ## TODO
 * Remove checking pointer events on iframe based apps because
 it's unnecessary with new AppLayout update

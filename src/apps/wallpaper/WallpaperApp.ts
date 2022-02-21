@@ -9,6 +9,7 @@ import wp1 from '../../../resources/apps/wallpaper/wallpapers/wp1.gif';
 import wp2 from '../../../resources/apps/wallpaper/wallpapers/wp2.gif';
 import wp3 from '../../../resources/apps/wallpaper/wallpapers/wp3.gif';
 import wp4 from '../../../resources/apps/wallpaper/wallpapers/wp4.svg';
+import wp5 from '../../../resources/apps/wallpaper/wallpapers/wp5.jpg';
 
 import {IShortcut} from '../../interfaces/IShortcut';
 import WindowManager from '../../services/WindowManager';
@@ -73,7 +74,7 @@ export default class WallpaperApp implements IProcess {
     public readonly outputStream$: IProcessStream,
     public readonly errorStream$: IProcessStream
   ) {
-    this.wallpapers$.next([wp1.src, wp2.src, wp3.src, wp4.src]);
+    this.wallpapers$.next([wp1.src, wp2.src, wp3.src, wp4.src, wp5.src]);
   }
 
   public setWallpaper(url?: string): void {
